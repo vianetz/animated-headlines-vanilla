@@ -1,41 +1,41 @@
-$(function() {
-        $('.animate-rotate-1').animatedHeadline({
-            animationType: 'rotate-1'
-        });
-
-        $('.animate-type').animatedHeadline({
-            animationType: 'type'
-        });
-
-        $('.animate-rotate-2').animatedHeadline({
-            animationType: 'rotate-2'
-        });
-
-        $('.animate-loading-bar').animatedHeadline({
-            animationType: 'loading-bar'
-        });
-
-        $('.animate-slide').animatedHeadline({
-            animationType: 'slide'
-        });
-
-        $('.animate-clip').animatedHeadline({
-            animationType: 'clip'
-        });
-
-        $('.animate-zoom').animatedHeadline({
-            animationType: 'zoom'
-        });
-
-        $('.animate-rotate-3').animatedHeadline({
-            animationType: 'rotate-3'
-        });
-
-        $('.animate-scale').animatedHeadline({
-            animationType: 'scale'
-        });
-
-        $('.animate-push').animatedHeadline({
-            animationType: 'push'
-        });
+document.addEventListener('DOMContentLoaded', function () {
+    AnimatedHeadline('.animate-rotate-1', {
+        animationType: 'rotate-1'
     });
+
+    AnimatedHeadline('.animate-type', {
+        animationType: 'type'
+    });
+
+    AnimatedHeadline('.animate-rotate-2', {
+        animationType: 'rotate-2'
+    });
+
+    AnimatedHeadline('.animate-loading-bar', {
+        animationType: 'loading-bar'
+    });
+
+    AnimatedHeadline('.animate-slide', {
+        animationType: 'slide'
+    });
+
+    AnimatedHeadline('.animate-clip', {
+        animationType: 'clip'
+    });
+
+    AnimatedHeadline('.animate-zoom', {
+        animationType: 'zoom'
+    });
+
+    AnimatedHeadline('.animate-rotate-3', {
+        animationType: 'rotate-3'
+    });
+
+    AnimatedHeadline('.animate-scale', {
+        animationType: 'scale'
+    });
+
+    AnimatedHeadline('.animate-push', {
+        animationType: 'push'
+    });
+});

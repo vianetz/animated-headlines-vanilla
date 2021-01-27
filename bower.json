@@ -1,13 +1,12 @@
 {
   "name": "animated-headlines",
   "description": "Simple animated headlines without Jquery!",
-  "main": "dist/js/jquery.animatedheadline.js",
+  "main": "dist/js/animated-headline.js",
   "authors": [
     "Geoff Selby"
   ],
   "license": "MIT",
   "keywords": [
-    "jquery",
     "animated",
     "headlines",
     "typewriter"

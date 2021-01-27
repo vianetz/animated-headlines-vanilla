@@ -11,11 +11,11 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.copy('src/js/jquery.animatedheadline.js', 'dist/js/')
-   .sass('src/scss/jquery.animatedheadline.scss', 'dist/css/')
+mix.copy('src/js/animated-headline.js', 'dist/js/')
+   .sass('src/scss/animated-headline.scss', 'dist/css/')
    .sass('demo/scss/style.scss', 'demo/css/');
 
-mix.minify('dist/js/jquery.animatedheadline.js');
+mix.minify('dist/js/animated-headline.js');
 
 // Full API
 // mix.js(src, output);
