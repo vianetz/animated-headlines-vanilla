@@ -1,6 +1,6 @@
 {
-  "name": "jquery-animated-headlines",
-  "description": "Simple animated headlines!",
+  "name": "animated-headlines",
+  "description": "Simple animated headlines without Jquery!",
   "main": "dist/js/jquery.animatedheadline.js",
   "authors": [
     "Geoff Selby"
@@ -12,7 +12,7 @@
     "headlines",
     "typewriter"
   ],
-  "homepage": "https://github.com/GeoffSelby/jquery-animated-headlines",
+  "homepage": "https://github.com/vianetz/animated-headlines-vanilla.git",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -20,9 +20,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "jquery": "^3.1.1"
-  },
   "devDependencies": {
     "laravel-mix": "https://github.com/JeffreyWay/laravel-mix"
   }
