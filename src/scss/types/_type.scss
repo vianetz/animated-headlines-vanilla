@@ -1,0 +1,70 @@
+@use "../mixins" as mixins;
+
+$type-color: #000 !default;
+
+.ah-words-wrapper.type {
+        vertical-align: top;
+        overflow: hidden;
+
+        &::after {
+            /* vertical bar */
+            content: '';
+            position: absolute;
+            right: 0;
+            @include mixins.center(y);
+            height: 90%;
+            width: 1px;
+            background-color: $type-color;
+        }
+
+        &.waiting::after {
+            animation: ah-pulse 1s infinite;
+        }
+
+        &.selected {
+            background-color: #f0f0f0;
+
+            &::after {
+                visibility: hidden;
+            }
+
+            b {
+                color: $type-color;
+            }
+        }
+
+    b {
+        visibility: hidden;
+
+        &.is-visible {
+            visibility: visible;
+        }
+    }
+
+    .letter {
+        position: absolute;
+        visibility: hidden;
+
+        &.is-visible {
+            position: relative;
+            visibility: visible;
+        }
+    }
+}
+
+@keyframes ah-pulse {
+    0% {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+
+    40% {
+        transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(-50%) scale(0);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,40 @@
+.ah-words-wrapper.zoom {
+    perspective: 300px;
+
+    b {
+        opacity: 0;
+
+        &.is-visible {
+            opacity: 1;
+            animation: zoom-in .8s;
+        }
+
+        &.is-hidden {
+            animation: zoom-out .8s;
+        }
+    }
+}
+
+@keyframes zoom-in {
+    0% {
+        opacity: 0;
+        transform: translateZ(100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+
+@keyframes zoom-out {
+    0% {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateZ(-100px);
+    }
+}

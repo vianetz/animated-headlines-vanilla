@@ -1,13 +1,16 @@
 {
   "name": "animated-headlines-vanilla",
   "version": "2.0.0",
-  "description": "Simple animated headlines without Jquery!",
+  "description": "Simple animated, accessible headlines using plain JavaScript.",
   "main": "dist/js/animated-headline.js",
   "scripts": {
-    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
   },
   "author": "Geoff Selby",
   "contributors": [
@@ -23,6 +26,9 @@
     "typewriter"
   ],
   "devDependencies": {
-    "laravel-mix": "^0.8.1"
+    "laravel-mix": "^6.0",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.69.5",
+    "sass-loader": "^12.6.0"
   }
 }

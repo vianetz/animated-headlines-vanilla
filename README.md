@@ -1,6 +1,6 @@
 # Animated Headlines with Vanilla JavaScript
 
-Animated headlines, with interchangeable words that replace one another through CSS transitions.
+Animated headlines with interchangeable words that replace one another through CSS transitions.
 
 ## Installation
 
@@ -24,7 +24,7 @@ Include the css in your head.
 
 Use the following markup.
 ```html
-<div class="selector">
+<section class="animated-headline">
     <h1 class="ah-headline">
         <span>My favorite food is</span>
         <span class="ah-words-wrapper">
@@ -33,7 +33,7 @@ Use the following markup.
             <b>steak</b>
         </span>
     </h1>
-</div>
+</section>
 ```
 
 Finally, initialize the plugin.
@@ -41,7 +41,7 @@ Finally, initialize the plugin.
 <script src="dist/js/animated-headline.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    AnimatedHeadline('.animatedHeadline');
+    AnimatedHeadline('.animated-headline');
 });
 </script>
 ```
@@ -52,7 +52,7 @@ The plugin provides multiple options to customize the animation type and delay.
 ```html
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    AnimatedHeadline('.animatedHeadline', {
+    AnimatedHeadline('.animated-headline', {
         animationType: 'type'
     });
 });
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ## Options
 
-It is recommended to use the default delay options. Because of this, I won't list them below. See `src/js/jquery.animatedheadline.js` for a complete list of options.
+It is recommended to use the default delay options. Because of this, I won't list them below. See `src/js/animated-headline.js` for a complete list of options.
 
 <table>
     <tr>

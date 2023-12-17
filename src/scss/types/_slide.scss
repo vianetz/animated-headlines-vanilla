@@ -1,0 +1,58 @@
+.ah-words-wrapper.slide {
+    span {
+        display: inline-block;
+        padding: .2em 0;
+    }
+
+    overflow: hidden;
+    vertical-align: top;
+
+    b {
+        opacity: 0;
+        top: .2em;
+
+        &.is-visible {
+            top: 0;
+            opacity: 1;
+            animation: slide-in .6s;
+        }
+
+        &.is-hidden {
+            animation: slide-out .6s;
+        }
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    60% {
+        opacity: 0;
+        transform: translateY(120%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}

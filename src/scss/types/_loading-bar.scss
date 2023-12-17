@@ -1,0 +1,40 @@
+$bar-color: blue !default;
+
+.ah-words-wrapper.loading-bar {
+    span {
+        display: inline-block;
+        padding: .2em 0;
+    }
+
+    overflow: hidden;
+    vertical-align: top;
+
+    &::after {
+        /* loading bar */
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 0;
+        background: $bar-color;
+        z-index: 2;
+        transition: width .3s -0.1s;
+    }
+
+    &.is-loading::after {
+        width: 100%;
+        transition: width 3s;
+    }
+
+    b {
+        top: .2em;
+        opacity: 0;
+        transition: opacity .3s;
+
+        &.is-visible {
+            opacity: 1;
+            top: 0;
+        }
+    }
+}

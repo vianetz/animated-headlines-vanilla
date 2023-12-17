@@ -1,0 +1,30 @@
+$clip-color: #000 !default;
+
+.ah-words-wrapper.clip {
+    span {
+        display: inline-block;
+        padding: .2em 0;
+    }
+
+    overflow: hidden;
+    vertical-align: top;
+
+    &::after {
+        /* line */
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background-color: $clip-color;
+    }
+
+    b {
+        opacity: 0;
+
+        &.is-visible {
+            opacity: 1;
+        }
+    }
+}
