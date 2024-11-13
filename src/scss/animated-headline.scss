@@ -1,19 +1,18 @@
-@use "variables";
 @use "core";
 @use "types";
 
 // by default we simply include all styles with default colors
-#{variables.$wrapper-classname} {
+.ah-words-wrapper {
     @include core.styles;
 
-    @include types.clip-styles(variables.$color-1);
-    @include types.loading-bar-styles(variables.$color-2);
+    @include types.clip-styles;
+    @include types.loading-bar-styles;
     @include types.push-styles;
     @include types.rotate-1-styles;
     @include types.rotate-2-styles;
     @include types.rotate-3-styles;
     @include types.scale-styles;
     @include types.slide-styles;
-    @include types.type-styles(variables.$color-1);
+    @include types.type-styles;
     @include types.zoom-styles;
 }

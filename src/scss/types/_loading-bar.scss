@@ -1,5 +1,7 @@
-@mixin styles($bar-color: blue) {
+@mixin styles() {
     &.loading-bar {
+        --ah-bar-color: #356efd;
+
         span {
             display: inline-block;
             padding: .2em 0;
@@ -16,7 +18,7 @@
             bottom: 0;
             height: 3px;
             width: 0;
-            background: $bar-color;
+            background: var(--ah-bar-color);
             z-index: 2;
             transition: width .3s -0.1s;
         }

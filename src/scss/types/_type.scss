@@ -1,7 +1,11 @@
 @use "../mixins";
 
-@mixin styles($type-color: #000, $selection-bg-color: #f0f0f0, $selection-color: $type-color) {
+@mixin styles() {
     &.type {
+        --ah-type-color: #363636;
+        --ah-selection-bg-color: #f0f0f0;
+        --ah-selection-color: var(--ah-type-color);
+
         vertical-align: top;
         overflow: hidden;
 
@@ -13,7 +17,7 @@
             @include mixins.center(y);
             height: 90%;
             width: 1px;
-            background-color: $type-color;
+            background-color: var(--ah-type-color);
         }
 
         &.waiting::after {
@@ -21,14 +25,14 @@
         }
 
         &.selected {
-            background-color: $selection-bg-color;
+            background-color: var(--ah-selection-bg-color);
 
             &::after {
                 visibility: hidden;
             }
 
             b {
-                color: $selection-color;
+                color: var(--ah-selection-color);
             }
         }
 
