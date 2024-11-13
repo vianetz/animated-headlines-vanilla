@@ -41,9 +41,7 @@ Finally, initialize the plugin.
 ```html
 <script src="dist/js/animated-headline.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        AnimatedHeadline('.ah-words-wrapper');
-    });
+    document.addEventListener('DOMContentLoaded', () => AnimatedHeadline('.ah-words-wrapper'));
 </script>
 ```
 
@@ -53,12 +51,12 @@ The plugin provides multiple options to customize the animation type and delay.
 
 ```html
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () =>
         AnimatedHeadline('.ah-words-wrapper', {
             animationType: 'type',
             animationDelay: 1500,
-        });
-    });
+        })
+    );
 </script>
 ```
 

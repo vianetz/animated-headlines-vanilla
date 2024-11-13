@@ -1,12 +1,6 @@
-@import 'variables';
-@import '../../src/scss/mixins';
+@use 'variables';
+@use '../../src/scss/mixins';
 @import 'layout';
-
-/* -------------------------------- 
-
-Primary style
-
--------------------------------- */
 
 *, *::after, *::before {
     box-sizing: border-box;
@@ -24,10 +18,10 @@ html {
 body {
     font: {
         size: 1.6rem;
-        family: $primary-font;
+        family: variables.$primary-font;
     }
-    color: $color-1;
-    background-color: $color-3;
+    color: variables.$color-1;
+    background-color: variables.$color-3;
 }
 
 a {

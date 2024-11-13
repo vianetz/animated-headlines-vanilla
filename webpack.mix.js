@@ -16,6 +16,8 @@ mix.sass('src/scss/animated-headline.scss', 'dist/css/')
 
 mix.minify('dist/js/animated-headline.js');
 
+mix.copyDirectory('dist', 'demo/dist');
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
