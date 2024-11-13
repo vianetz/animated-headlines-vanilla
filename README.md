@@ -2,6 +2,10 @@
 
 Animated headlines with interchangeable words that replace one another through CSS transitions.
 
+## Demo
+
+see https://vianetz.github.io/animated-headlines-vanilla/
+
 ## Installation
 
 ### npm
