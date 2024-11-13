@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - run: |
-          npm ci
+          npm install
           rm -rf ./demo/scss
           npm run production
       - name: Setup Pages
