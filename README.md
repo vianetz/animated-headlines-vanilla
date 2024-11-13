@@ -7,12 +7,12 @@ Animated headlines with interchangeable words that replace one another through C
 ### npm
 
 ```bash
-npm install animated-headlines-vanilla
+npm install https://github.com/vianetz/animated-headlines-vanilla/
 ```
 
 ### bower
 ```bash
-bower install animated-headlines-vanilla
+bower install https://github.com/vianetz/animated-headlines-vanilla/
 ```
 
 ## Default Usage
@@ -25,8 +25,8 @@ Include the css in your head.
 Use the following markup.
 ```html
 <section class="animated-headline">
-    <h1 class="ah-headline">
-        <span>My favorite food is</span>
+    <h1>
+        My favorite food is
         <span class="ah-words-wrapper">
             <b class="is-visible">pizza</b>
             <b>sushi</b>
@@ -37,25 +37,28 @@ Use the following markup.
 ```
 
 Finally, initialize the plugin.
+
 ```html
 <script src="dist/js/animated-headline.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    AnimatedHeadline('.animated-headline');
-});
+    document.addEventListener('DOMContentLoaded', function () {
+        AnimatedHeadline('.ah-words-wrapper');
+    });
 </script>
 ```
 
 ## Advanced Usage
 
 The plugin provides multiple options to customize the animation type and delay.
+
 ```html
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    AnimatedHeadline('.animated-headline', {
-        animationType: 'type'
+    document.addEventListener('DOMContentLoaded', function () {
+        AnimatedHeadline('.ah-words-wrapper', {
+            animationType: 'type',
+            animationDelay: 1500,
+        });
     });
-});
 </script>
 ```
 
@@ -80,4 +83,4 @@ It is recommended to use the default delay options. Because of this, I won't lis
 
 ## License
 
-jQuery Animated Headlines is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Animated Headlines is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

@@ -1,0 +1,31 @@
+@use "mixins";
+
+@mixin styles() {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+
+    b {
+        display: inline-block;
+        position: absolute;
+        white-space: nowrap;
+        left: 0;
+        top: 0;
+
+        &.is-visible {
+            position: relative;
+        }
+
+        &:not(.is-visible) {
+            visibility: hidden; // make sure initial state looks good
+        }
+    }
+
+    @media (prefers-reduced-motion) {
+        @include mixins.disable-animation;
+    }
+
+    @media print {
+        @include mixins.disable-animation;
+    }
+}

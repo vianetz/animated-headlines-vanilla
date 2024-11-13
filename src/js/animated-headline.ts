@@ -37,31 +37,30 @@ type Options = {
 }
 
 // Factory
-// @todo create alias for legacy AnimatedHeadline
-function createAnimatedHeadline(selector: string, options: Partial<Options> = {}): AnimatedHeadline {
+function AnimatedHeadline(selector: string, options: Partial<Options> = {}): AnimatedWords {
     const element = document.querySelector(selector) as HTMLElement;
     let animation;
 
     switch (options.animationType) {
         case AnimationType.Clip:
-            animation = new ClipAnimatedHeadline(element, options.animationDelay, options.revealAnimationDelay, options.revealDuration);
+            animation = new ClipAnimatedWords(element, options.animationDelay, options.revealAnimationDelay, options.revealDuration);
             break;
         case AnimationType.LoadingBar:
-            animation = new LoadingBarAnimatedHeadline(element, options.barAnimationDelay, options.barWaiting);
+            animation = new LoadingBarAnimatedWords(element, options.barAnimationDelay, options.barWaiting);
             break;
         case AnimationType.Push:
         case AnimationType.Slide:
         case AnimationType.Rotate1:
         case AnimationType.Zoom:
-            animation = new AnimatedHeadline(element, options.animationDelay);
+            animation = new AnimatedWords(element, options.animationDelay);
             break;
         case AnimationType.Scale:
         case AnimationType.Rotate2:
         case AnimationType.Rotate3:
-            animation = new SingleLettersAnimatedHeadline(element, options.animationDelay, options.lettersDelay);
+            animation = new AnimatedSingleLetters(element, options.animationDelay, options.lettersDelay);
             break;
         case AnimationType.Type:
-            animation = new TypeAnimatedHeadline(element, options.animationDelay, options.lettersDelay, options.typeAnimationDelay, options.selectionDuration);
+            animation = new TypeAnimatedWords(element, options.animationDelay, options.lettersDelay, options.typeAnimationDelay, options.selectionDuration);
             break;
         default:
             throw 'invalid animation type ' + options.animationType;
@@ -92,11 +91,11 @@ function animate(timing: (timeFraction: number) => any, draw: (timePassed: numbe
     });
 }
 
-class AnimatedHeadline {
+class AnimatedWords {
     #isStopped = false;
     duration = 0;
     protected readonly animationDelay;
-    rootElement;
+    protected readonly rootElement;
 
     protected readonly wordSelector = 'b';
     protected readonly visibleClassName = 'is-visible';
@@ -184,13 +183,12 @@ class AnimatedHeadline {
                 return;
             }
 
-console.debug('function is executed');
             callable();
         }, duration);
     }
 }
 
-class SingleLettersAnimatedHeadline extends AnimatedHeadline
+class AnimatedSingleLetters extends AnimatedWords
 {
     private readonly lettersDelay: number;
     protected readonly letterClassName = 'letter';
@@ -250,7 +248,7 @@ class SingleLettersAnimatedHeadline extends AnimatedHeadline
     }
 }
 
-class TypeAnimatedHeadline extends SingleLettersAnimatedHeadline {
+class TypeAnimatedWords extends AnimatedSingleLetters {
     #waitingClassName = 'waiting';
     #selectedClassName = 'selected';
     private readonly typeAnimationDelay;
@@ -284,8 +282,7 @@ class TypeAnimatedHeadline extends SingleLettersAnimatedHeadline {
             parentSpan.classList.remove(this.#selectedClassName);
             this.makeHidden(word);
             word.querySelectorAll('.' + this.letterClassName).forEach((e) => {
-                e.classList.remove(this.visibleClassName);
-                e.classList.add(this.hiddenClassName);
+                this.makeHidden(e as HTMLElement);
             });
         });
 
@@ -301,7 +298,7 @@ class TypeAnimatedHeadline extends SingleLettersAnimatedHeadline {
     }
 }
 
-class ClipAnimatedHeadline extends AnimatedHeadline { // @todo
+class ClipAnimatedWords extends AnimatedWords {
     private readonly revealAnimationDelay;
     private readonly revealDuration;
 
@@ -319,14 +316,11 @@ class ClipAnimatedHeadline extends AnimatedHeadline { // @todo
     protected showWord(word: HTMLElement) {
        let animation = (word.parentNode as HTMLElement).animate([{width: '2px'}, {width: word.offsetWidth + 'px' }], {duration: this.revealDuration});
        animation.onfinish= (e) => {
-console.log('starting timer with ' + this.revealAnimationDelay);
             this.runAfter(this.revealAnimationDelay, () => this.next(word));
         };
     }
 
     protected next(word: HTMLElement = null) {
-        super.next(word);
-
         word = word ?? this.current();
         const nextWord = this.getNextWord(word);
 
@@ -338,7 +332,7 @@ console.log('starting timer with ' + this.revealAnimationDelay);
     }
 }
 
-class LoadingBarAnimatedHeadline extends AnimatedHeadline {
+class LoadingBarAnimatedWords extends AnimatedWords {
     readonly #loadingClassName = 'is-loading';
     private readonly barWaiting;
 

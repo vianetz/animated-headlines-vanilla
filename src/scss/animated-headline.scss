@@ -1,29 +1,19 @@
-@use 'variables';
-@use 'mixins';
+@use "variables";
+@use "core";
 @use "types";
 
-.ah-words-wrapper {
-    display: inline-block;
-    position: relative;
-    text-align: left;
+// by default we simply include all styles with default colors
+#{variables.$wrapper-classname} {
+    @include core.styles;
 
-    b {
-        display: inline-block;
-        position: absolute;
-        white-space: nowrap;
-        left: 0;
-        top: 0;
-
-        &.is-visible {
-            position: relative;
-        }
-    }
-
-    .no-js & b {
-        opacity: 0;
-        
-        &.is-visible {
-            opacity: 1;
-        }
-    }
+    @include types.clip-styles(variables.$color-1);
+    @include types.loading-bar-styles(variables.$color-2);
+    @include types.push-styles;
+    @include types.rotate-1-styles;
+    @include types.rotate-2-styles;
+    @include types.rotate-3-styles;
+    @include types.scale-styles;
+    @include types.slide-styles;
+    @include types.type-styles(variables.$color-1);
+    @include types.zoom-styles;
 }

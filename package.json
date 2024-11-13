@@ -5,12 +5,13 @@
   "main": "dist/js/animated-headline.js",
   "scripts": {
     "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
+    "development": "npm run tsc && mix",
+    "watch": "tsc --watch --project . & mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "mix --production"
+    "production": "npm run tsc && mix --production",
+    "tsc": "tsc --project ."
   },
   "author": "Geoff Selby",
   "contributors": [
@@ -29,6 +30,8 @@
     "laravel-mix": "^6.0",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.5",
-    "sass-loader": "^12.6.0"
+    "sass-loader": "^12.6.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3"
   }
 }

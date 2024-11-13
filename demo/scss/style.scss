@@ -1,7 +1,5 @@
 @import 'variables';
-
 @import '../../src/scss/mixins';
-
 @import 'layout';
 
 /* -------------------------------- 
@@ -82,7 +80,7 @@ a {
     }
 }
 
-.ah-headline {
+.ah-headline, .intro h1 {
     font-size: 3rem;
     line-height: 1.2;
 

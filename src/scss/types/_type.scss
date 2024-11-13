@@ -1,8 +1,7 @@
-@use "../mixins" as mixins;
+@use "../mixins";
 
-$type-color: #000 !default;
-
-.ah-words-wrapper.type {
+@mixin styles($type-color: #000, $selection-bg-color: #f0f0f0, $selection-color: $type-color) {
+    &.type {
         vertical-align: top;
         overflow: hidden;
 
@@ -22,49 +21,50 @@ $type-color: #000 !default;
         }
 
         &.selected {
-            background-color: #f0f0f0;
+            background-color: $selection-bg-color;
 
             &::after {
                 visibility: hidden;
             }
 
             b {
-                color: $type-color;
+                color: $selection-color;
             }
         }
 
-    b {
-        visibility: hidden;
+        b {
+            visibility: hidden;
 
-        &.is-visible {
-            visibility: visible;
+            &.is-visible {
+                visibility: visible;
+            }
+        }
+
+        .letter {
+            position: absolute;
+            visibility: hidden;
+
+            &.is-visible {
+                position: relative;
+                visibility: visible;
+            }
         }
     }
 
-    .letter {
-        position: absolute;
-        visibility: hidden;
-
-        &.is-visible {
-            position: relative;
-            visibility: visible;
+    @keyframes ah-pulse {
+        0% {
+            transform: translateY(-50%) scale(1);
+            opacity: 1;
         }
-    }
-}
 
-@keyframes ah-pulse {
-    0% {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-    }
+        40% {
+            transform: translateY(-50%) scale(0.9);
+            opacity: 0;
+        }
 
-    40% {
-        transform: translateY(-50%) scale(0.9);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(-50%) scale(0);
-        opacity: 0;
+        100% {
+            transform: translateY(-50%) scale(0);
+            opacity: 0;
+        }
     }
 }
