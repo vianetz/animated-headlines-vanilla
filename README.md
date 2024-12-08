@@ -1,22 +1,19 @@
 # Animated Headlines with Vanilla JavaScript
 
 Animated headlines with interchangeable words that replace one another through CSS transitions.
-
-## Demo
-
-see https://vianetz.github.io/animated-headlines-vanilla/
+See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
 
 ## Installation
 
 ### npm
 
 ```bash
-npm install https://github.com/vianetz/animated-headlines-vanilla/
+npm install @vianetz/animated-headlines-vanilla
 ```
 
 ### bower
 ```bash
-bower install https://github.com/vianetz/animated-headlines-vanilla/
+bower install @vianetz/animated-headlines-vanilla
 ```
 
 ## Default Usage

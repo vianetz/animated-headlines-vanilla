@@ -21,11 +21,7 @@
         }
     }
 
-    @media (prefers-reduced-motion) {
-        @include mixins.disable-animation;
-    }
-
-    @media print {
+    @media prefers-reduced-motion, print {
         @include mixins.disable-animation;
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "animated-headlines-vanilla",
+  "name": "@vianetz/animated-headlines-vanilla",
   "version": "2.0.0",
   "description": "Simple animated, accessible headlines using plain JavaScript.",
   "main": "dist/js/animated-headline.js",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vianetz/animated-headlines-vanilla.git"
+    "url": "git+https://github.com/vianetz/animated-headlines-vanilla.git"
   },
   "keywords": [
     "animated headlines",
