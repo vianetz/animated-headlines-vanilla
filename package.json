@@ -1,6 +1,6 @@
 {
   "name": "@vianetz/animated-headlines-vanilla",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Simple animated, accessible headlines using plain JavaScript.",
   "browser": "dist/js/animated-headline.js",
   "scripts": {
