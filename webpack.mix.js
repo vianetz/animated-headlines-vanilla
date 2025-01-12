@@ -11,10 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.sass('src/scss/animated-headline.scss', 'dist/css/')
-   .sass('demo/scss/style.scss', 'demo/css/');
+mix.sass('src/scss/animated-headline.scss', 'dist/')
+   .sass('demo/scss/style.scss', 'demo/');
 
-mix.ts('src/js/animated-headline.ts', 'dist/js');
+mix.ts('src/js/animated-headline.ts', 'dist');
 
 mix.copyDirectory('dist', 'demo/dist');
 
