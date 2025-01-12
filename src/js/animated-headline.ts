@@ -6,7 +6,7 @@
  * @license Licensed under the MIT license.
  */
 
-enum AnimationType {
+export enum AnimationType {
     Clip = 'clip',
     LoadingBar = 'loading-bar',
     Push = 'push',
@@ -37,7 +37,7 @@ type Options = {
 }
 
 // Factory
-function AnimatedHeadline(selector: string, options: Partial<Options> = {}): AnimatedWords {
+export function AnimatedHeadline(selector: string, options: Partial<Options> = {}): AnimatedWords {
     const element = document.querySelector(selector) as HTMLElement;
     let animation;
 
@@ -136,7 +136,7 @@ class AnimatedWords {
     }
 
     /** @api */
-    public current(): HTMLElement {
+    public current(): HTMLElement|null {
         const visibleElement = this.rootElement.querySelector(this.wordSelector + '.' + this.visibleClassName) as HTMLElement;
         if (visibleElement === null) {
             return this.rootElement.querySelector(this.wordSelector);
@@ -146,8 +146,12 @@ class AnimatedWords {
     }
 
     // main logic
-    protected next(word: HTMLElement = null) {
+    protected next(word: HTMLElement|null = null) {
         word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
         const nextWord = this.getNextWord(word);
 
         this.switchWord(word, nextWord);
@@ -200,8 +204,12 @@ class AnimatedSingleLetters extends AnimatedWords
         this.rootElement.querySelectorAll(this.wordSelector).forEach(this.splitIntoSingleLetters, this);
     }
 
-    protected next(word: HTMLElement = null) {
+    protected next(word: HTMLElement|null = null) {
         word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
         const nextWord = this.getNextWord(word);
         const isHideWordIfLastLetter = word.querySelectorAll('.' + this.letterClassName).length >= nextWord.querySelectorAll('.' + this.letterClassName).length;
 
@@ -270,8 +278,12 @@ class TypeAnimatedWords extends AnimatedSingleLetters {
         this.makeVisible(word);
     }
 
-    protected next(word: HTMLElement = null) {
+    protected next(word: HTMLElement|null = null) {
         word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
         const nextWord = this.getNextWord(word);
 
         const parentSpan = word.parentNode as HTMLElement;
@@ -320,8 +332,12 @@ class ClipAnimatedWords extends AnimatedWords {
         };
     }
 
-    protected next(word: HTMLElement = null) {
+    protected next(word: HTMLElement|null = null) {
         word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
         const nextWord = this.getNextWord(word);
 
         let animation = (word.parentNode as HTMLElement).animate([{width: word.offsetWidth + 'px' }, {width: '2px'}], {duration: this.revealDuration});
@@ -347,10 +363,14 @@ class LoadingBarAnimatedWords extends AnimatedWords {
         this.runAfter(this.barWaiting, () => this.rootElement.classList.add(this.#loadingClassName));
     }
 
-    protected next(word: HTMLElement = null) {
+    protected next(word: HTMLElement|null = null) {
         super.next(word);
 
         word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
         (word.parentNode as HTMLElement).classList.remove(this.#loadingClassName);
         this.runAfter(this.barWaiting, () => (word.parentNode as HTMLElement).classList.add(this.#loadingClassName));
     }

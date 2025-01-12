@@ -14,7 +14,7 @@ let mix = require('laravel-mix');
 mix.sass('src/scss/animated-headline.scss', 'dist/css/')
    .sass('demo/scss/style.scss', 'demo/css/');
 
-mix.minify('dist/js/animated-headline.js');
+mix.ts('src/js/animated-headline.ts', 'dist/js');
 
 mix.copyDirectory('dist', 'demo/dist');
 

@@ -2,16 +2,16 @@
   "name": "@vianetz/animated-headlines-vanilla",
   "version": "2.0.0",
   "description": "Simple animated, accessible headlines using plain JavaScript.",
-  "main": "dist/js/animated-headline.js",
+  "browser": "dist/js/animated-headline.js",
   "scripts": {
     "dev": "npm run development",
-    "development": "npm run tsc && mix",
-    "watch": "tsc --watch --project . & mix watch",
+    "development": "mix",
+    "watch": "mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "npm run tsc && mix --production",
-    "tsc": "tsc --project ."
+    "production": "mix --production",
+    "test": "tsc --noEmit"
   },
   "author": "Geoff Selby",
   "contributors": [
