@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "./dist/animated-headline.css",
+      "maxSize": "1.4 kB"
+    },
+    {
+      "path": "./dist/animated-headline.js",
+      "maxSize": "3.4 kB"
+    }
+  ]
+}

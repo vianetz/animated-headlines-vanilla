@@ -12,7 +12,7 @@
     "hot": "mix watch --hot",
     "prod": "npm run production",
     "production": "mix --production",
-    "test": "tsc --noEmit"
+    "test": "tsc --noEmit && bundlesize"
   },
   "author": "Geoff Selby",
   "contributors": [
@@ -28,6 +28,7 @@
     "typewriter"
   ],
   "devDependencies": {
+    "bundlesize2": "^0.0.34",
     "laravel-mix": "^6.0",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.5",
