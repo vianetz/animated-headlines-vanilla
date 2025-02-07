@@ -5,6 +5,7 @@
   "browser": "dist/animated-headline.js",
   "style": "dist/animated-headline.css",
   "scripts": {
+    "clean": "rm -rf dist/* demo/dist/*",
     "dev": "npm run development",
     "development": "mix",
     "watch": "mix watch",
@@ -12,7 +13,8 @@
     "hot": "mix watch --hot",
     "prod": "npm run production",
     "production": "mix --production",
-    "test": "tsc --noEmit && bundlesize"
+    "test": "tsc --noEmit && bundlesize",
+    "build": "npm run clean && npm run prod"
   },
   "author": "Geoff Selby",
   "contributors": [

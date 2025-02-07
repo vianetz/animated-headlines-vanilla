@@ -20,7 +20,7 @@ bower install @vianetz/animated-headlines-vanilla
 
 Include the css in your head.
 ```html
-<link rel="stylesheet" src="dist/css/animated-headline.css">
+<link rel="stylesheet" src="dist/animated-headline.css">
 ```
 
 Use the following markup.
@@ -40,7 +40,7 @@ Use the following markup.
 Finally, initialize the plugin.
 
 ```html
-<script src="dist/js/animated-headline.min.js"></script>
+<script src="dist/animated-headline.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => AnimatedHeadline('.ah-words-wrapper'));
 </script>
