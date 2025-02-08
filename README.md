@@ -1,6 +1,6 @@
 # Animated Headlines with Vanilla JavaScript
 
-Animated headlines with interchangeable words that replace one another through CSS transitions.
+Animated headlines with interchangeable words that replace one another through CSS transitions.  
 See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
 
 ## Installation
@@ -40,7 +40,7 @@ Use the following markup.
 Finally, initialize the plugin.
 
 ```html
-<script src="dist/animated-headline.min.js"></script>
+<script src="dist/animated-headline.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => AnimatedHeadline('.ah-words-wrapper'));
 </script>
@@ -63,7 +63,7 @@ The plugin provides multiple options to customize the animation type and delay.
 
 ## Options
 
-It is recommended to use the default delay options. Because of this, I won't list them below. See `src/js/animated-headline.js` for a complete list of options.
+It is recommended to use the default delay options. Because of this, I won't list them below. See [app.ts](src/js/app.ts) for a complete list of options.
 
 <table>
     <tr>
