@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: https://registry.npmjs.org/
+      - name: Extract version from Git tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          npm version $TAG --git-tag-version=false
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
