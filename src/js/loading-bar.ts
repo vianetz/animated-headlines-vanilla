@@ -8,13 +8,13 @@ import {AnimatedWordsElement} from "./words";
 
 class LoadingBarAnimatedWordsElement extends AnimatedWordsElement {
     readonly #loadingClassName = 'is-loading';
-    barWaiting = 800;
+    barDelay = 500;
 
     protected init() {
         super.init();
 
-        this.barWaiting = this.hasAttribute('bar-waiting') ? parseInt(<string>this.getAttribute('bar-waiting')) : this.barWaiting;
-        this.runAfter(this.barWaiting, () => this.classList.add(this.#loadingClassName));
+        this.barDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.barDelay;
+        this.runAfter(this.barDelay, () => this.classList.add(this.#loadingClassName));
     }
 
     protected next(word: HTMLElement|null = null) {
@@ -26,7 +26,7 @@ class LoadingBarAnimatedWordsElement extends AnimatedWordsElement {
         }
 
         (word.parentNode as HTMLElement).classList.remove(this.#loadingClassName);
-        this.runAfter(this.barWaiting, () => (word.parentNode as HTMLElement).classList.add(this.#loadingClassName));
+        this.runAfter(this.barDelay, () => (word.parentNode as HTMLElement).classList.add(this.#loadingClassName));
     }
 }
 customElements.define('via-animated-headline-loading', LoadingBarAnimatedWordsElement);

@@ -7,11 +7,11 @@
 import {AnimatedWordsElement} from "./words";
 
 class ClipAnimatedWordsElement extends AnimatedWordsElement {
-    revealDuration= 600;
+    revealDelay= 600;
 
     protected init() {
         super.init();
-        this.revealDuration = this.hasAttribute('reveal-duration') ? parseInt(<string>this.getAttribute('reveal-duration')) : this.revealDuration;
+        this.revealDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.revealDelay;
     }
 
     protected resize() {
@@ -19,8 +19,8 @@ class ClipAnimatedWordsElement extends AnimatedWordsElement {
     }
 
     protected showWord(word: HTMLElement) {
-       let animation = (word.parentNode as HTMLElement).animate([{width: '2px'}, {width: word.offsetWidth + 'px' }], {duration: this.revealDuration});
-       animation.onfinish = (e) => this.runAfter(this.animationDelay, () => this.next(word));
+       let animation = (word.parentNode as HTMLElement).animate([{width: '2px'}, {width: word.offsetWidth + 'px' }], {duration: this.revealDelay});
+       animation.onfinish = (e) => this.runAfter(this.holdDelay, () => this.next(word));
     }
 
     protected next(word: HTMLElement|null = null) {
@@ -31,7 +31,7 @@ class ClipAnimatedWordsElement extends AnimatedWordsElement {
 
         const nextWord = this.getNextWord(word);
 
-        let animation = (word.parentNode as HTMLElement).animate([{width: word.offsetWidth + 'px' }, {width: '2px'}], {duration: this.revealDuration});
+        let animation = (word.parentNode as HTMLElement).animate([{width: word.offsetWidth + 'px' }, {width: '2px'}], {duration: this.revealDelay});
         animation.onfinish = (e) => {
             this.switchWord(word, nextWord);
             this.showWord(nextWord);

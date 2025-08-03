@@ -13,7 +13,7 @@ export class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
 
     protected init() {
         super.init();
-        this.selectionDuration = this.hasAttribute('selection-duration') ? parseInt(<string>this.getAttribute('selection-duration')) : this.selectionDuration;
+        this.selectionDuration = this.hasAttribute('selection') ? parseInt(<string>this.getAttribute('selection')) : this.selectionDuration;
     }
 
     protected resize() {
@@ -45,7 +45,7 @@ export class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
             });
         });
 
-        this.runAfter(this.animationDelay, () => this.showWord(nextWord));
+        this.runAfter(this.selectionDuration * 2, () => this.showWord(nextWord));
     }
 
     protected showLetter(letter: HTMLElement, word: HTMLElement, isHideWordIfLastLetter = true) {

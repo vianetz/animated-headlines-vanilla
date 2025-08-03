@@ -12,7 +12,7 @@ export class AnimatedSingleLettersElement extends AnimatedWordsElement {
 
     protected init() {
         super.init();
-        this.lettersDelay = this.hasAttribute('letters-delay') ? parseInt(<string>this.getAttribute('letters-delay')) : this.lettersDelay;
+        this.lettersDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.lettersDelay;
     }
 
     connectedCallback() {
@@ -47,7 +47,7 @@ export class AnimatedSingleLettersElement extends AnimatedWordsElement {
         if (letter.nextElementSibling) {
             this.runAfter(this.lettersDelay, () => this.hideOrShowLetter(letter.nextElementSibling as HTMLElement, word, isHideWordIfLastLetter, isHide));
         } else if (isHideWordIfLastLetter) {
-            this.runAfter(this.animationDelay, () => this.next(isHide ? this.getNextWord(word) : word));
+            this.runAfter(this.holdDelay, () => this.next(isHide ? this.getNextWord(word) : word));
         }
     }
 

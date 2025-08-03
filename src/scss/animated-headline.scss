@@ -6,31 +6,31 @@ via-animated-headline {
         @include core.styles;
     }
 
-    &[type="rotate-1"] {
+    &[animation="rotate-1"] {
         @include types.rotate-1-styles;
     }
 
-    &[type="rotate-2"] {
+    &[animation="rotate-2"] {
         @include types.rotate-2-styles;
     }
 
-    &[type="rotate-3"] {
+    &[animation="rotate-3"] {
         @include types.rotate-3-styles;
     }
 
-    &[type="slide"] {
+    &[animation="slide"] {
         @include types.slide-styles;
     }
 
-    &[type="push"] {
+    &[animation="push"] {
         @include types.push-styles;
     }
 
-    &[type="scale"] {
+    &[animation="scale"] {
         @include types.scale-styles;
     }
 
-    &[type="zoom"] {
+    &[animation="zoom"] {
         @include types.zoom-styles;
     }
 }

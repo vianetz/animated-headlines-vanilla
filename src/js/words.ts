@@ -26,7 +26,7 @@ function animate(timing: (timeFraction: number) => any, draw: (timePassed: numbe
 
 export class AnimatedWordsElement extends HTMLElement {
     #isStopped = false;
-    animationDelay: number = 2500;
+    holdDelay: number = 2500;
 
     protected readonly wordSelector = 'b';
     protected readonly visibleClassName = 'is-visible';
@@ -42,7 +42,7 @@ export class AnimatedWordsElement extends HTMLElement {
     }
 
     protected init() {
-        this.animationDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.animationDelay;
+        this.holdDelay = this.hasAttribute('hold') ? parseInt(<string>this.getAttribute('hold')) : this.holdDelay;
         this.resize();
     }
 
@@ -59,7 +59,7 @@ export class AnimatedWordsElement extends HTMLElement {
     /** @api */
     public start() {
         this.#isStopped = false;
-        this.runAfter(this.animationDelay, () => this.next());
+        this.runAfter(this.holdDelay, () => this.next());
     }
 
     /** @api */
@@ -84,7 +84,7 @@ export class AnimatedWordsElement extends HTMLElement {
         const nextWord = this.getNextWord(word);
 
         this.switchWord(word, nextWord);
-        this.runAfter(this.animationDelay, () => this.next(nextWord));
+        this.runAfter(this.holdDelay, () => this.next(nextWord));
     }
 
     protected getNextWord(word: HTMLElement) {
