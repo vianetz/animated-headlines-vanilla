@@ -1,32 +1,30 @@
 @mixin styles() {
-    &.clip {
-        --ah-clip-color: #363636;
+    --ah-clip-color: #363636;
 
-        span {
-            display: inline-block;
-            padding: .2em 0;
-        }
+    span {
+        display: inline-block;
+        padding: .2em 0;
+    }
 
-        overflow: hidden;
-        vertical-align: top;
+    overflow: hidden;
+    vertical-align: top;
 
-        &::after {
-            /* line */
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 2px;
-            height: 100%;
-            background-color: var(--ah-clip-color);
-        }
+    &::after {
+        /* line */
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background-color: var(--ah-clip-color);
+    }
 
-        b {
-            opacity: 0;
+    b {
+        opacity: 0;
 
-            &.is-visible {
-                opacity: 1;
-            }
+        &.is-visible {
+            opacity: 1;
         }
     }
 }

@@ -20,6 +20,7 @@ body {
         size: 1.6rem;
         family: variables.$primary-font;
     }
+
     color: variables.$color-1;
     background-color: variables.$color-3;
 }
@@ -60,9 +61,6 @@ a {
 
 .intro {
     text-align: center;
-}
-
-.intro {
     margin: 4em auto;
 
     @include MQ(M) {

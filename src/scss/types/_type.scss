@@ -1,57 +1,56 @@
 @use "../mixins";
 
 @mixin styles() {
-    &.type {
-        --ah-type-color: #363636;
-        --ah-selection-bg-color: #f0f0f0;
-        --ah-selection-color: var(--ah-type-color);
+    --ah-cursor-color: #363636;
+    --ah-cursor-width: 1px;
+    --ah-selection-bg-color: #f0f0f0;
+    --ah-selection-color: var(--ah-cursor-color);
 
-        vertical-align: top;
-        overflow: hidden;
+    vertical-align: top;
+    overflow: hidden;
+
+    &::after {
+        /* vertical bar */
+        content: '';
+        position: absolute;
+        right: 0;
+        @include mixins.center(y);
+        height: 90%;
+        width: var(--ah-cursor-width);
+        background-color: var(--ah-cursor-color);
+    }
+
+    &.waiting::after {
+        animation: ah-pulse 1s infinite;
+    }
+
+    &.selected {
+        background-color: var(--ah-selection-bg-color);
 
         &::after {
-            /* vertical bar */
-            content: '';
-            position: absolute;
-            right: 0;
-            @include mixins.center(y);
-            height: 90%;
-            width: 1px;
-            background-color: var(--ah-type-color);
-        }
-
-        &.waiting::after {
-            animation: ah-pulse 1s infinite;
-        }
-
-        &.selected {
-            background-color: var(--ah-selection-bg-color);
-
-            &::after {
-                visibility: hidden;
-            }
-
-            b {
-                color: var(--ah-selection-color);
-            }
+            visibility: hidden;
         }
 
         b {
-            visibility: hidden;
-
-            &.is-visible {
-                visibility: visible;
-            }
+            color: var(--ah-selection-color);
         }
+    }
 
-        .letter {
-            position: absolute;
-            visibility: hidden;
+    b {
+        visibility: hidden;
 
-            &.is-visible {
-                position: relative;
-                visibility: visible;
-            }
+        &.is-visible {
+            visibility: visible;
+        }
+    }
+
+    .letter {
+        position: absolute;
+        visibility: hidden;
+
+        &.is-visible {
+            position: relative;
+            visibility: visible;
         }
     }
 

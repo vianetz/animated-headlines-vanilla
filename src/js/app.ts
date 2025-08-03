@@ -3,8 +3,10 @@
  *
  * @author Geoff Selby
  * @author Christoph Massmann <cm@vianetz.com>
- * @license Licensed under the MIT license.
+ * @license https://opensource.org/licenses/MIT MIT License
  */
+
+// @todo split into separate files
 
 export enum AnimationType {
     Clip = 'clip',
@@ -24,52 +26,83 @@ enum DefaultOptions {
     LettersDelay = 50,
 }
 
-type Options = {
-    readonly animationType: AnimationType;
-    readonly animationDelay: number;
-    readonly lettersDelay: number;
-    readonly typeAnimationDelay: number;
-    readonly selectionDuration: number;
-    readonly revealAnimationDelay: number;
-    readonly revealDuration: number;
-    readonly barAnimationDelay: number;
-    readonly barWaiting: number;
-}
+function createAnimatedHeadline(animationType: AnimationType, props: { [key: string]: string|null } = {}): AnimatedWordsElement {
+    let element;
 
-// Factory
-export function AnimatedHeadline(selector: string, options: Partial<Options> = {}): AnimatedWords {
-    const element = document.querySelector(selector) as HTMLElement;
-    let animation;
-
-    switch (options.animationType) {
+    switch (animationType) {
         case AnimationType.Clip:
-            animation = new ClipAnimatedWords(element, options.animationDelay, options.revealAnimationDelay, options.revealDuration);
+            element = document.createElement('via-animated-headline-clip') as ClipAnimatedWordsElement;
             break;
         case AnimationType.LoadingBar:
-            animation = new LoadingBarAnimatedWords(element, options.barAnimationDelay, options.barWaiting);
+            element = document.createElement('via-animated-headline-loading') as LoadingBarAnimatedWordsElement;
             break;
         case AnimationType.Push:
         case AnimationType.Slide:
         case AnimationType.Rotate1:
         case AnimationType.Zoom:
-            animation = new AnimatedWords(element, options.animationDelay);
+            element = document.createElement('via-animated-headline-words') as AnimatedWordsElement;
             break;
         case AnimationType.Scale:
         case AnimationType.Rotate2:
         case AnimationType.Rotate3:
-            animation = new AnimatedSingleLetters(element, options.animationDelay, options.lettersDelay);
+            element = document.createElement('via-animated-headline-letters') as AnimatedSingleLettersElement;
             break;
         case AnimationType.Type:
-            animation = new TypeAnimatedWords(element, options.animationDelay, options.lettersDelay, options.typeAnimationDelay, options.selectionDuration);
+            element = document.createElement('via-animated-headline-type') as TypeAnimatedWordsElement;
             break;
         default:
-            throw 'invalid animation type ' + options.animationType;
+            throw 'invalid animation type ' + animationType + ' (must be one of ' + Object.values(AnimationType) + ')';
     }
-    
-    element.classList.add(options.animationType);
 
-    return animation;
+    // copy attributes to child
+    for (const [key, value] of Object.entries(props)) {
+        element.setAttribute(key, value ?? '');
+    }
+
+    return element;
 }
+
+class AnimatedHeadline extends HTMLElement {
+    static get observedAttributes() {
+        return ['type', 'delay']; // @todo add missing attributes
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
+        const animationType = this.getAttribute('type') as AnimationType;
+
+        // collect all attributes except 'type'
+        const forwardedAttrs: { [key: string]: string|null } = {};
+        for (const attr of this.attributes) {
+          if (attr.name !== 'type') {
+            forwardedAttrs[attr.name] = attr.value;
+          }
+        }
+
+        const wrapper = createAnimatedHeadline(animationType, forwardedAttrs);
+        // re-add the inner contents of the element
+        Array.from(this.children).forEach(child => {
+            if (child.tagName?.startsWith('VIA-ANIMATED-HEADLINE')) {
+                child.childNodes.forEach(n => wrapper.appendChild(n.cloneNode(true)));
+            } else {
+                wrapper.appendChild(child.cloneNode(true));
+            }
+        });
+
+        // @ts-ignore
+        this.innerHTML = '';
+        // @ts-ignore
+        this.appendChild(wrapper);
+    }
+}
+customElements.define('via-animated-headline', AnimatedHeadline);
 
 // @see https://javascript.info/js-animation
 function animate(timing: (timeFraction: number) => any, draw: (timePassed: number) => any, duration: number) {
@@ -91,43 +124,42 @@ function animate(timing: (timeFraction: number) => any, draw: (timePassed: numbe
     });
 }
 
-class AnimatedWords {
+class AnimatedWordsElement extends HTMLElement {
     #isStopped = false;
-    duration = 0;
-    protected readonly animationDelay;
-    protected readonly rootElement;
+    animationDelay: number = DefaultOptions.AnimationDelay;
 
     protected readonly wordSelector = 'b';
     protected readonly visibleClassName = 'is-visible';
-    protected readonly hiddenClassName = 'is-hidden';
+    protected readonly hiddenClassName = 'is-hidden'; // @todo use hidden attribute instead
 
-    constructor(element: HTMLElement, animationDelay: number = DefaultOptions.AnimationDelay) {
-        this.rootElement = element;
-        this.animationDelay = animationDelay;
-        this.duration = animationDelay;
-
+    connectedCallback() {
         this.init();
         this.start();
     }
 
+    attributeChangedCallback() {
+        this.resize();
+    }
+
     protected init() {
+        this.animationDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.animationDelay;
         this.resize();
     }
     
     protected resize() {
         let width = 0;
         // assign to wrapper element the width of its longest word
-        this.rootElement.querySelectorAll(this.wordSelector).forEach(function (e) {
+        this.querySelectorAll(this.wordSelector).forEach(function (e) {
             width = Math.max((e as HTMLElement).offsetWidth, width);
         });
 
-        this.rootElement.style.width = width.toString();
+        this.style.width = width.toString();
     }
 
     /** @api */
     public start() {
         this.#isStopped = false;
-        this.runAfter(this.duration, () => this.next());
+        this.runAfter(this.animationDelay, () => this.next());
     }
 
     /** @api */
@@ -137,12 +169,9 @@ class AnimatedWords {
 
     /** @api */
     public current(): HTMLElement|null {
-        const visibleElement = this.rootElement.querySelector(this.wordSelector + '.' + this.visibleClassName) as HTMLElement;
-        if (visibleElement === null) {
-            return this.rootElement.querySelector(this.wordSelector);
-        }
+        const visibleElement = this.querySelector(this.wordSelector + '.' + this.visibleClassName) as HTMLElement;
 
-        return visibleElement;
+        return visibleElement ?? this.querySelector(this.wordSelector);
     }
 
     // main logic
@@ -191,17 +220,20 @@ class AnimatedWords {
         }, duration);
     }
 }
+customElements.define('via-animated-headline-words', AnimatedWordsElement);
 
-class AnimatedSingleLetters extends AnimatedWords
-{
-    private readonly lettersDelay: number;
+class AnimatedSingleLettersElement extends AnimatedWordsElement {
+    lettersDelay: number = DefaultOptions.LettersDelay;
     protected readonly letterClassName = 'letter';
 
-    constructor(element: HTMLElement, animationDelay: number = DefaultOptions.AnimationDelay, lettersDelay: number = DefaultOptions.LettersDelay) {
-        super(element, animationDelay);
+    protected init() {
+        super.init();
+        this.lettersDelay = this.hasAttribute('letters-delay') ? parseInt(<string>this.getAttribute('letters-delay')) : this.lettersDelay;
+    }
 
-        this.lettersDelay = lettersDelay;
-        this.rootElement.querySelectorAll(this.wordSelector).forEach(this.splitIntoSingleLetters, this);
+    connectedCallback() {
+        super.connectedCallback();
+        this.querySelectorAll(this.wordSelector).forEach(this.splitIntoSingleLetters, this);
     }
 
     protected next(word: HTMLElement|null = null) {
@@ -255,18 +287,16 @@ class AnimatedSingleLetters extends AnimatedWords
         (word as HTMLElement).style.opacity = "1";
     }
 }
+customElements.define('via-animated-headline-letters', AnimatedSingleLettersElement);
 
-class TypeAnimatedWords extends AnimatedSingleLetters {
+class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
     #waitingClassName = 'waiting';
     #selectedClassName = 'selected';
-    private readonly typeAnimationDelay;
-    private readonly selectionDuration;
+    selectionDuration= 500;
 
-    constructor(element: HTMLElement, animationDelay: number = DefaultOptions.AnimationDelay, lettersDelay: number = DefaultOptions.LettersDelay, typeAnimationDelay: number = 1300, selectionDuration: number = 500) {
-        super(element, animationDelay, lettersDelay);
-
-        this.typeAnimationDelay = typeAnimationDelay;
-        this.selectionDuration = selectionDuration;
+    protected init() {
+        super.init();
+        this.selectionDuration = this.hasAttribute('selection-duration') ? parseInt(<string>this.getAttribute('selection-duration')) : this.selectionDuration;
     }
 
     protected resize() {
@@ -298,7 +328,7 @@ class TypeAnimatedWords extends AnimatedSingleLetters {
             });
         });
 
-        this.runAfter(this.typeAnimationDelay, () => this.showWord(nextWord));
+        this.runAfter(this.animationDelay, () => this.showWord(nextWord));
     }
 
     protected showLetter(letter: HTMLElement, word: HTMLElement, isHideWordIfLastLetter = true) {
@@ -309,27 +339,23 @@ class TypeAnimatedWords extends AnimatedSingleLetters {
         }
     }
 }
+customElements.define('via-animated-headline-type', TypeAnimatedWordsElement);
 
-class ClipAnimatedWords extends AnimatedWords {
-    private readonly revealAnimationDelay;
-    private readonly revealDuration;
+class ClipAnimatedWordsElement extends AnimatedWordsElement {
+    revealDuration= 600;
 
-    constructor(element: HTMLElement, animationDelay: number = DefaultOptions.AnimationDelay, revealAnimationDelay: number = 1500, revealDuration: number = 600) {
-        super(element, animationDelay);
-
-        this.revealAnimationDelay = revealAnimationDelay;
-        this.revealDuration = revealDuration;
+    protected init() {
+        super.init();
+        this.revealDuration = this.hasAttribute('reveal-duration') ? parseInt(<string>this.getAttribute('reveal-duration')) : this.revealDuration;
     }
 
     protected resize() {
-        this.rootElement.style.width = String(this.rootElement.offsetWidth + 10);
+        this.style.width = String(this.offsetWidth + 10);
     }
 
     protected showWord(word: HTMLElement) {
        let animation = (word.parentNode as HTMLElement).animate([{width: '2px'}, {width: word.offsetWidth + 'px' }], {duration: this.revealDuration});
-       animation.onfinish= (e) => {
-            this.runAfter(this.revealAnimationDelay, () => this.next(word));
-        };
+       animation.onfinish = (e) => this.runAfter(this.animationDelay, () => this.next(word));
     }
 
     protected next(word: HTMLElement|null = null) {
@@ -341,26 +367,23 @@ class ClipAnimatedWords extends AnimatedWords {
         const nextWord = this.getNextWord(word);
 
         let animation = (word.parentNode as HTMLElement).animate([{width: word.offsetWidth + 'px' }, {width: '2px'}], {duration: this.revealDuration});
-        animation.onfinish= (e) => {
+        animation.onfinish = (e) => {
             this.switchWord(word, nextWord);
             this.showWord(nextWord);
         };
     }
 }
+customElements.define('via-animated-headline-clip', ClipAnimatedWordsElement);
 
-class LoadingBarAnimatedWords extends AnimatedWords {
+class LoadingBarAnimatedWordsElement extends AnimatedWordsElement {
     readonly #loadingClassName = 'is-loading';
-    private readonly barWaiting;
-
-    constructor(element: HTMLElement, barAnimationDelay: number = 3800, barWaiting: number = 800) {
-        super(element, barAnimationDelay);
-        this.barWaiting = barWaiting;
-    }
+    barWaiting = 800;
 
     protected init() {
         super.init();
 
-        this.runAfter(this.barWaiting, () => this.rootElement.classList.add(this.#loadingClassName));
+        this.barWaiting = this.hasAttribute('bar-waiting') ? parseInt(<string>this.getAttribute('bar-waiting')) : this.barWaiting;
+        this.runAfter(this.barWaiting, () => this.classList.add(this.#loadingClassName));
     }
 
     protected next(word: HTMLElement|null = null) {
@@ -375,3 +398,4 @@ class LoadingBarAnimatedWords extends AnimatedWords {
         this.runAfter(this.barWaiting, () => (word.parentNode as HTMLElement).classList.add(this.#loadingClassName));
     }
 }
+customElements.define('via-animated-headline-loading', LoadingBarAnimatedWordsElement);

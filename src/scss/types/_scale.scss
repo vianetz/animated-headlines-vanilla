@@ -1,25 +1,23 @@
 @mixin styles() {
-    &.scale {
-        b {
-            opacity: 0;
+    b {
+        opacity: 0;
+    }
+
+    .letter {
+        display: inline-block;
+        opacity: 0;
+        transform: scale(0);
+
+        .is-visible & {
+            opacity: 1;
         }
 
-        .letter {
-            display: inline-block;
-            opacity: 0;
-            transform: scale(0);
+        &.is-visible {
+            animation: scale-up .6s forwards;
+        }
 
-            .is-visible & {
-                opacity: 1;
-            }
-
-            &.is-visible {
-                animation: scale-up .6s forwards;
-            }
-
-            &.is-hidden {
-                animation: scale-down .6s forwards;
-            }
+        &.is-hidden {
+            animation: scale-down .6s forwards;
         }
     }
 

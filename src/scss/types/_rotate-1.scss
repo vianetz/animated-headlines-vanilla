@@ -1,22 +1,20 @@
 @mixin styles() {
-    &.rotate-1 {
-        perspective: 300px;
+    perspective: 300px;
 
-        b {
-            opacity: 0;
-            transform-origin: 50% 100%;
+    b {
+        opacity: 0;
+        transform-origin: 50% 100%;
+        transform: rotateX(180deg);
+
+        &.is-visible {
+            opacity: 1;
+            transform: rotateX(0deg);
+            animation: ah-rotate-1-in 1.2s;
+        }
+
+        &.is-hidden {
             transform: rotateX(180deg);
-
-            &.is-visible {
-                opacity: 1;
-                transform: rotateX(0deg);
-                animation: ah-rotate-1-in 1.2s;
-            }
-
-            &.is-hidden {
-                transform: rotateX(180deg);
-                animation: ah-rotate-1-out 1.2s;
-            }
+            animation: ah-rotate-1-out 1.2s;
         }
     }
 

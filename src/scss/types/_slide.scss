@@ -1,26 +1,24 @@
 @mixin styles() {
-    &.slide {
-        span {
-            display: inline-block;
-            padding: .2em 0;
+    span {
+        display: inline-block;
+        padding: .2em 0;
+    }
+
+    overflow: hidden;
+    vertical-align: top;
+
+    b {
+        opacity: 0;
+        top: .2em;
+
+        &.is-visible {
+            top: 0;
+            opacity: 1;
+            animation: slide-in .6s;
         }
 
-        overflow: hidden;
-        vertical-align: top;
-
-        b {
-            opacity: 0;
-            top: .2em;
-
-            &.is-visible {
-                top: 0;
-                opacity: 1;
-                animation: slide-in .6s;
-            }
-
-            &.is-hidden {
-                animation: slide-out .6s;
-            }
+        &.is-hidden {
+            animation: slide-out .6s;
         }
     }
 

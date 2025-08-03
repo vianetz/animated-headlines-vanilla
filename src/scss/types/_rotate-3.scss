@@ -1,27 +1,25 @@
 @mixin styles() {
-    &.rotate-3 {
-        perspective: 300px;
+    perspective: 300px;
 
-        b {
-            opacity: 0;
+    b {
+        opacity: 0;
+    }
+
+    .letter {
+        display: inline-block;
+        transform: rotateY(180deg);
+        backface-visibility: hidden;
+
+        .is-visible & {
+            transform: rotateY(0deg);
         }
 
-        .letter {
-            display: inline-block;
-            transform: rotateY(180deg);
-            backface-visibility: hidden;
+        &.is-visible {
+            animation: ah-rotate-3-in .6s forwards;
+        }
 
-            .is-visible & {
-                transform: rotateY(0deg);
-            }
-
-            &.is-visible {
-                animation: ah-rotate-3-in .6s forwards;
-            }
-
-            &.is-hidden {
-                animation: ah-rotate-3-out .6s forwards;
-            }
+        &.is-hidden {
+            animation: ah-rotate-3-out .6s forwards;
         }
     }
 

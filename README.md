@@ -1,6 +1,6 @@
 # Animated Headlines with Vanilla JavaScript
 
-Animated headlines with interchangeable words that replace one another through CSS transitions.  
+Animated Headlines with interchangeable words that replace one another through CSS transitions.  
 See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
 
 ## Installation
@@ -18,68 +18,39 @@ bower install @vianetz/animated-headlines-vanilla
 
 ## Default Usage
 
-Include the css in your head.
+Include the CSS and JavaScript in your head:
+
 ```html
 <link rel="stylesheet" src="dist/animated-headline.css">
+<script src="dist/animated-headline.js" defer></script>
 ```
 
-Use the following markup.
-```html
-<section class="animated-headline">
-    <h1>
-        My favorite food is
-        <span class="ah-words-wrapper">
-            <b class="is-visible">pizza</b>
-            <b>sushi</b>
-            <b>steak</b>
-        </span>
-    </h1>
-</section>
-```
-
-Finally, initialize the plugin.
+Then use the following markup:
 
 ```html
-<script src="dist/animated-headline.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => AnimatedHeadline('.ah-words-wrapper'));
-</script>
+<h1>
+    My favorite food is
+    <via-animated-headline type="rotate-1">
+        <b class="is-visible">pizza</b>
+        <b>sushi</b>
+        <b>steak</b>
+    </span>
+</h1>
 ```
 
 ## Advanced Usage
 
-The plugin provides multiple options to customize the animation type and delay.
-
-```html
-<script>
-    document.addEventListener('DOMContentLoaded', () =>
-        AnimatedHeadline('.ah-words-wrapper', {
-            animationType: 'type',
-            animationDelay: 1500,
-        })
-    );
-</script>
-```
 
 ## Options
 
-It is recommended to use the default delay options. Because of this, I won't list them below. See [app.ts](src/js/app.ts) for a complete list of options.
+The animated headline component provides multiple options to customize different animation settings depending on the type, e.g.:
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-    </tr>
-    <tr valign="top">
-        <td>animation-type</td>
-        <td>string</td>
-        <td>rotate-1</td>
-        <td>Type of animation used.<br /><strong>Options</strong>: <ul><li>rotate-1</li><li>rotate-2</li><li>rotate-3</li><li>type</li><li>loading-bar</li><li>slide</li><li>clip</li><li>zoom</li><li>scale</li><li>push</li></ul></td>
-    </tr>
-</table>
+```html
+<via-animated-headline type="type" delay="3000" letters-delay="1000">
+```
+
+See the [demo source](demo/index.html) for a full list of options for all types.
 
 ## License
 
-Animated Headlines is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Animated Headlines is open-sourced software licensed under the [MIT license](https://opensource.org/license/MIT).

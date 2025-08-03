@@ -1,18 +1,48 @@
 @use "core";
 @use "types";
 
-// by default we simply include all styles with default colors
-.ah-words-wrapper {
-    @include core.styles;
+via-animated-headline {
+    > * {
+        @include core.styles;
+    }
 
-    @include types.clip-styles;
-    @include types.loading-bar-styles;
-    @include types.push-styles;
-    @include types.rotate-1-styles;
-    @include types.rotate-2-styles;
-    @include types.rotate-3-styles;
-    @include types.scale-styles;
-    @include types.slide-styles;
+    &[type="rotate-1"] {
+        @include types.rotate-1-styles;
+    }
+
+    &[type="rotate-2"] {
+        @include types.rotate-2-styles;
+    }
+
+    &[type="rotate-3"] {
+        @include types.rotate-3-styles;
+    }
+
+    &[type="slide"] {
+        @include types.slide-styles;
+    }
+
+    &[type="push"] {
+        @include types.push-styles;
+    }
+
+    &[type="scale"] {
+        @include types.scale-styles;
+    }
+
+    &[type="zoom"] {
+        @include types.zoom-styles;
+    }
+}
+
+via-animated-headline-type {
     @include types.type-styles;
-    @include types.zoom-styles;
+}
+
+via-animated-headline-loading {
+    @include types.loading-bar-styles;
+}
+
+via-animated-headline-clip {
+    @include types.clip-styles;
 }

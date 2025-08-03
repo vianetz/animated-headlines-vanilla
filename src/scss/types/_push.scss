@@ -1,16 +1,14 @@
 @mixin styles() {
-    &.push {
-        b {
-            opacity: 0;
+    b {
+        opacity: 0;
 
-            &.is-visible {
-                opacity: 1;
-                animation: push-in .6s;
-            }
+        &.is-visible {
+            opacity: 1;
+            animation: push-in .6s;
+        }
 
-            &.is-hidden {
-                animation: push-out .6s;
-            }
+        &.is-hidden {
+            animation: push-out .6s;
         }
     }
 
