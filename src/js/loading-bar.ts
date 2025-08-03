@@ -4,14 +4,14 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-import {AnimatedWordsElement} from "./words";
+import AnimatedWordsElement from "./words";
 
 class LoadingBarAnimatedWordsElement extends AnimatedWordsElement {
     readonly #loadingClassName = 'is-loading';
     barDelay = 500;
 
-    protected init() {
-        super.init();
+    connectedCallback() {
+        super.connectedCallback();
 
         this.barDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.barDelay;
         this.runAfter(this.barDelay, () => this.classList.add(this.#loadingClassName));

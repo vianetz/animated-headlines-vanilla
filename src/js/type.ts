@@ -4,15 +4,16 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-import {AnimatedSingleLettersElement} from "./letters";
+import AnimatedSingleLettersElement from "./letters";
 
-export class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
+export default class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
     #waitingClassName = 'waiting';
     #selectedClassName = 'selected';
     selectionDuration= 500;
 
-    protected init() {
-        super.init();
+    connectedCallback() {
+        super.connectedCallback();
+
         this.selectionDuration = this.hasAttribute('selection') ? parseInt(<string>this.getAttribute('selection')) : this.selectionDuration;
     }
 
@@ -40,9 +41,7 @@ export class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
         this.runAfter(this.selectionDuration, () => {
             parentSpan.classList.remove(this.#selectedClassName);
             this.makeHidden(word);
-            word.querySelectorAll('.' + this.letterClassName).forEach((e) => {
-                this.makeHidden(e as HTMLElement);
-            });
+            word.querySelectorAll('.' + this.letterClassName).forEach((e) => this.makeHidden(e as HTMLElement));
         });
 
         this.runAfter(this.selectionDuration * 2, () => this.showWord(nextWord));

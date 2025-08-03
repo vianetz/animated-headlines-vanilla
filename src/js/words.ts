@@ -24,7 +24,7 @@ function animate(timing: (timeFraction: number) => any, draw: (timePassed: numbe
     });
 }
 
-export class AnimatedWordsElement extends HTMLElement {
+export default class AnimatedWordsElement extends HTMLElement {
     #isStopped = false;
     holdDelay: number = 2500;
 
@@ -33,16 +33,16 @@ export class AnimatedWordsElement extends HTMLElement {
     protected readonly hiddenClassName = 'is-hidden'; // @todo use hidden attribute instead
 
     connectedCallback() {
-        this.init();
-        this.start();
+        this.holdDelay = this.hasAttribute('hold') ? parseInt(<string>this.getAttribute('hold')) : this.holdDelay;
+        this.resize();
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (! prefersReducedMotion) {
+            this.start();
+        }
     }
 
     attributeChangedCallback() {
-        this.resize();
-    }
-
-    protected init() {
-        this.holdDelay = this.hasAttribute('hold') ? parseInt(<string>this.getAttribute('hold')) : this.holdDelay;
         this.resize();
     }
 

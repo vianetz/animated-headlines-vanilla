@@ -4,19 +4,16 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-import {AnimatedWordsElement} from "./words";
+import AnimatedWordsElement from "./words";
 
-export class AnimatedSingleLettersElement extends AnimatedWordsElement {
+export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
     lettersDelay: number = 50;
     protected readonly letterClassName = 'letter';
 
-    protected init() {
-        super.init();
-        this.lettersDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.lettersDelay;
-    }
-
     connectedCallback() {
         super.connectedCallback();
+
+        this.lettersDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.lettersDelay;
         this.querySelectorAll(this.wordSelector).forEach(this.splitIntoSingleLetters, this);
     }
 

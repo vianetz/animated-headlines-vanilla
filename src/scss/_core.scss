@@ -16,12 +16,24 @@
             position: relative;
         }
 
-        &:not(.is-visible) {
-            visibility: hidden; // make sure initial state looks good
-        }
-    }
+        @media (prefers-reduced-motion: reduce), print {
+            // hide everything..
+            &,
+            span {
+                animation: none !important;
+                display: none !important;
+            }
 
-    @media prefers-reduced-motion, print {
-        @include mixins.disable-animation;
+            // ..and only show the first option
+            &:first-of-type {
+                display: inline-block !important;
+
+                .letter {
+                    display: inline-block !important;
+                    transform: none;
+                    opacity: 1;
+                }
+            }
+        }
     }
 }

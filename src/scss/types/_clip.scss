@@ -9,15 +9,17 @@
     overflow: hidden;
     vertical-align: top;
 
-    &::after {
-        /* line */
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 2px;
-        height: 100%;
-        background-color: var(--ah-clip-color);
+    @media (prefers-reduced-motion: no-preference) {
+        &::after {
+            /* line */
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--ah-clip-color);
+        }
     }
 
     b {

@@ -4,13 +4,13 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-import {AnimatedWordsElement} from "./words";
+import AnimatedWordsElement from "./words";
 
 class ClipAnimatedWordsElement extends AnimatedWordsElement {
     revealDelay= 600;
 
-    protected init() {
-        super.init();
+    connectedCallback() {
+        super.connectedCallback();
         this.revealDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.revealDelay;
     }
 

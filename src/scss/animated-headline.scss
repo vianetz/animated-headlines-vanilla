@@ -1,10 +1,23 @@
 @use "core";
 @use "types";
 
-via-animated-headline {
-    > * {
-        @include core.styles;
+via-animated-headline,
+via-animated-headline-words,
+via-animated-headline-letters,
+via-animated-headline-loading,
+via-animated-headline-clip,
+via-animated-headline-type {
+    b:not(.is-visible) {
+        display: none; // make sure initial state looks good
     }
+}
+
+via-animated-headline-words,
+via-animated-headline-letters,
+via-animated-headline-loading,
+via-animated-headline-clip,
+via-animated-headline-type {
+    @include core.styles;
 
     &[animation="rotate-1"] {
         @include types.rotate-1-styles;

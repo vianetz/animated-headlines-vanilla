@@ -9,17 +9,19 @@
     overflow: hidden;
     vertical-align: top;
 
-    &::after {
-        /* loading bar */
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 3px;
-        width: 0;
-        background: var(--ah-bar-color);
-        z-index: 2;
-        transition: width .3s -0.1s;
+    @media (prefers-reduced-motion: no-preference) {
+        &::after {
+            /* loading bar */
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 0;
+            background: var(--ah-bar-color);
+            z-index: 2;
+            transition: width .3s -0.1s;
+        }
     }
 
     &.is-loading::after {

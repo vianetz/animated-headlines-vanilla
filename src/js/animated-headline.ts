@@ -61,9 +61,13 @@ function createAnimatedHeadline(animationType: AnimationType, props: { [key: str
     return element;
 }
 
+/**
+ * You can either use the global <via-animated-headline> custom element or the specific ones directly like <via-animated-headline-type>.
+ * This element simply instantiates the right sub-component and adds all attributes from the parent.
+ */
 class AnimatedHeadline extends HTMLElement {
     static get observedAttributes() {
-        return ['animation', 'hold']; // @todo add missing attributes
+        return ['animation', 'hold', 'delay'];
     }
 
     connectedCallback() {

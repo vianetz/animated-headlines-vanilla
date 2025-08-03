@@ -19,32 +19,3 @@
     transform: translateY(-50%);
   }
 }
-
-@mixin disable-animation {
-    animation: none;
-
-    // hide everything
-    b.is-visible,
-    b.is-hidden {
-        display: none !important;
-    }
-
-    // only show the first option
-    b:first-of-type {
-        &, i {
-            display: inline-block !important;
-            visibility: visible !important;
-            position: static;
-        }
-    }
-
-    // avoid selection
-    &.selected {
-        background-color: transparent !important;
-    }
-
-    // and typing cursor
-    &:after {
-        display: none;
-    }
-}
