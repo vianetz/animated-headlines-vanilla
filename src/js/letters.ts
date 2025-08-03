@@ -68,4 +68,4 @@ export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
         (word as HTMLElement).style.opacity = "1";
     }
 }
-customElements.define('via-animated-headline-letters', AnimatedSingleLettersElement);
+customElements.define('via-animated-letters-headline', AnimatedSingleLettersElement);

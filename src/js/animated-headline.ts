@@ -30,24 +30,24 @@ function createAnimatedHeadline(animationType: AnimationType, props: { [key: str
 
     switch (animationType) {
         case AnimationType.Clip:
-            element = document.createElement('via-animated-headline-clip');
+            element = document.createElement('via-animated-clip-headline');
             break;
         case AnimationType.LoadingBar:
-            element = document.createElement('via-animated-headline-loading');
+            element = document.createElement('via-animated-loading-headline');
             break;
         case AnimationType.Push:
         case AnimationType.Slide:
         case AnimationType.Rotate1:
         case AnimationType.Zoom:
-            element = document.createElement('via-animated-headline-words');
+            element = document.createElement('via-animated-words-headline');
             break;
         case AnimationType.Scale:
         case AnimationType.Rotate2:
         case AnimationType.Rotate3:
-            element = document.createElement('via-animated-headline-letters');
+            element = document.createElement('via-animated-letters-headline');
             break;
         case AnimationType.Type:
-            element = document.createElement('via-animated-headline-type');
+            element = document.createElement('via-animated-type-headline');
             break;
         default:
             throw 'invalid animation type ' + animationType + ' (must be one of ' + Object.values(AnimationType) + ')';
@@ -62,7 +62,7 @@ function createAnimatedHeadline(animationType: AnimationType, props: { [key: str
 }
 
 /**
- * You can either use the global <via-animated-headline> custom element or the specific ones directly like <via-animated-headline-type>.
+ * You can either use the global <via-animated-headline> custom element or the specific ones directly like <via-animated-type-headline>.
  * This element simply instantiates the right sub-component and adds all attributes from the parent.
  */
 class AnimatedHeadline extends HTMLElement {
@@ -92,7 +92,7 @@ class AnimatedHeadline extends HTMLElement {
         const wrapper = createAnimatedHeadline(animationType, forwardedAttrs);
         // re-add the inner contents of the element
         Array.from(this.children).forEach(child => {
-            if (child.tagName?.startsWith('VIA-ANIMATED-HEADLINE')) {
+            if (child.tagName?.startsWith('VIA-ANIMATED-')) {
                 child.childNodes.forEach(n => wrapper.appendChild(n.cloneNode(true)));
             } else {
                 wrapper.appendChild(child.cloneNode(true));

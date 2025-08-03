@@ -2,21 +2,21 @@
 @use "types";
 
 via-animated-headline,
-via-animated-headline-words,
-via-animated-headline-letters,
-via-animated-headline-loading,
-via-animated-headline-clip,
-via-animated-headline-type {
+via-animated-words-headline,
+via-animated-letters-headline,
+via-animated-loading-headline,
+via-animated-clip-headline,
+via-animated-type-headline {
     b:not(.is-visible) {
         display: none; // make sure initial state looks good
     }
 }
 
-via-animated-headline-words,
-via-animated-headline-letters,
-via-animated-headline-loading,
-via-animated-headline-clip,
-via-animated-headline-type {
+via-animated-words-headline,
+via-animated-letters-headline,
+via-animated-loading-headline,
+via-animated-clip-headline,
+via-animated-type-headline {
     @include core.styles;
 
     &[animation="rotate-1"] {
@@ -48,14 +48,14 @@ via-animated-headline-type {
     }
 }
 
-via-animated-headline-type {
+via-animated-type-headline {
     @include types.type-styles;
 }
 
-via-animated-headline-loading {
+via-animated-loading-headline {
     @include types.loading-bar-styles;
 }
 
-via-animated-headline-clip {
+via-animated-clip-headline {
     @include types.clip-styles;
 }

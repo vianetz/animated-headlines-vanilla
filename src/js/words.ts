@@ -120,4 +120,4 @@ export default class AnimatedWordsElement extends HTMLElement {
         }, duration);
     }
 }
-customElements.define('via-animated-headline-words', AnimatedWordsElement);
+customElements.define('via-animated-words-headline', AnimatedWordsElement);

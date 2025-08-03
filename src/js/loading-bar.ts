@@ -29,4 +29,4 @@ class LoadingBarAnimatedWordsElement extends AnimatedWordsElement {
         this.runAfter(this.barDelay, () => (word.parentNode as HTMLElement).classList.add(this.#loadingClassName));
     }
 }
-customElements.define('via-animated-headline-loading', LoadingBarAnimatedWordsElement);
+customElements.define('via-animated-loading-headline', LoadingBarAnimatedWordsElement);

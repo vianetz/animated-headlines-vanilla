@@ -38,4 +38,4 @@ class ClipAnimatedWordsElement extends AnimatedWordsElement {
         };
     }
 }
-customElements.define('via-animated-headline-clip', ClipAnimatedWordsElement);
+customElements.define('via-animated-clip-headline', ClipAnimatedWordsElement);

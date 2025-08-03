@@ -55,4 +55,4 @@ export default class TypeAnimatedWordsElement extends AnimatedSingleLettersEleme
         }
     }
 }
-customElements.define('via-animated-headline-type', TypeAnimatedWordsElement);
+customElements.define('via-animated-type-headline', TypeAnimatedWordsElement);
