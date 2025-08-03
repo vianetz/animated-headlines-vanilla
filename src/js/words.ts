@@ -1,0 +1,123 @@
+/**!
+ * @author Geoff Selby
+ * @author Christoph Massmann <cm@vianetz.com>
+ * @license https://opensource.org/licenses/MIT MIT License
+ */
+
+/** @see https://javascript.info/js-animation */
+function animate(timing: (timeFraction: number) => any, draw: (timePassed: number) => any, duration: number) {
+    let start = performance.now();
+
+    requestAnimationFrame(function animate(time) {
+        // timeFraction goes from 0 to 1
+        let timeFraction = (time - start) / duration;
+        if (timeFraction > 1) timeFraction = 1;
+
+        // calculate the current animation state
+        let progress = timing(timeFraction);
+
+        draw(progress);
+
+        if (timeFraction < 1) {
+            requestAnimationFrame(animate);
+        }
+    });
+}
+
+export class AnimatedWordsElement extends HTMLElement {
+    #isStopped = false;
+    animationDelay: number = 2500;
+
+    protected readonly wordSelector = 'b';
+    protected readonly visibleClassName = 'is-visible';
+    protected readonly hiddenClassName = 'is-hidden'; // @todo use hidden attribute instead
+
+    connectedCallback() {
+        this.init();
+        this.start();
+    }
+
+    attributeChangedCallback() {
+        this.resize();
+    }
+
+    protected init() {
+        this.animationDelay = this.hasAttribute('delay') ? parseInt(<string>this.getAttribute('delay')) : this.animationDelay;
+        this.resize();
+    }
+
+    protected resize() {
+        let width = 0;
+        // assign to wrapper element the width of its longest word
+        this.querySelectorAll(this.wordSelector).forEach(function (e) {
+            width = Math.max((e as HTMLElement).offsetWidth, width);
+        });
+
+        this.style.width = width.toString();
+    }
+
+    /** @api */
+    public start() {
+        this.#isStopped = false;
+        this.runAfter(this.animationDelay, () => this.next());
+    }
+
+    /** @api */
+    public stop() {
+        this.#isStopped = true;
+    }
+
+    /** @api */
+    public current(): HTMLElement|null {
+        const visibleElement = this.querySelector(this.wordSelector + '.' + this.visibleClassName) as HTMLElement;
+
+        return visibleElement ?? this.querySelector(this.wordSelector);
+    }
+
+    // main logic
+    protected next(word: HTMLElement|null = null) {
+        word = word ?? this.current();
+        if (word === null) {
+            return;
+        }
+
+        const nextWord = this.getNextWord(word);
+
+        this.switchWord(word, nextWord);
+        this.runAfter(this.animationDelay, () => this.next(nextWord));
+    }
+
+    protected getNextWord(word: HTMLElement) {
+        return (word.nextElementSibling ? word.nextElementSibling : word.parentNode!.children[0]) as HTMLElement;
+    }
+
+    protected switchWord(oldWord: HTMLElement, newWord: HTMLElement) {
+        this.makeHidden(oldWord);
+        this.makeVisible(newWord);
+    }
+
+    protected makeVisible(element: HTMLElement) {
+        element.classList.remove(this.hiddenClassName);
+        element.classList.add(this.visibleClassName);
+    }
+
+    protected makeHidden(element: HTMLElement) {
+        element.classList.remove(this.visibleClassName);
+        element.classList.add(this.hiddenClassName);
+    }
+
+    protected runAfter(duration: number, callable: () => any) {
+        animate((timeFraction: number) => { return timeFraction }, (timePassed: number) => {
+            if (this.#isStopped) {
+                throw 'execution aborted';
+            }
+
+            if (timePassed !== 1) {
+                return;
+            }
+
+            callable();
+        }, duration);
+    }
+}
+customElements.define('via-animated-headline-words', AnimatedWordsElement);
