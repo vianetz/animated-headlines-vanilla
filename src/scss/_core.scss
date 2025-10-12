@@ -6,14 +6,12 @@
     text-align: left;
 
     b {
-        display: inline-block;
-        position: absolute;
-        white-space: nowrap;
-        left: 0;
-        top: 0;
-
-        &.is-visible {
+        &:not([hidden]) {
+            display: inline-block;
+            white-space: nowrap;
             position: relative;
+            left: 0;
+            top: 0;
         }
 
         @media (prefers-reduced-motion: reduce), print {

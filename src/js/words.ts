@@ -29,8 +29,6 @@ export default class AnimatedWordsElement extends HTMLElement {
     holdDelay: number = 2500;
 
     protected readonly wordSelector = 'b';
-    protected readonly visibleClassName = 'is-visible';
-    protected readonly hiddenClassName = 'is-hidden'; // @todo use hidden attribute instead
 
     connectedCallback() {
         this.holdDelay = this.hasAttribute('hold') ? parseInt(<string>this.getAttribute('hold')) : this.holdDelay;
@@ -69,9 +67,9 @@ export default class AnimatedWordsElement extends HTMLElement {
 
     /** @api */
     public current(): HTMLElement|null {
-        const visibleElement = this.querySelector(this.wordSelector + '.' + this.visibleClassName) as HTMLElement;
+        const visibleElement = this.querySelector(this.wordSelector + ':not([hidden])') as HTMLElement;
 
-        return visibleElement ?? this.querySelector(this.wordSelector);
+        return visibleElement ?? this.querySelector(this.wordSelector); // simply select the first word by default
     }
 
     // main logic
@@ -97,13 +95,11 @@ export default class AnimatedWordsElement extends HTMLElement {
     }
 
     protected makeVisible(element: HTMLElement) {
-        element.classList.remove(this.hiddenClassName);
-        element.classList.add(this.visibleClassName);
+        element.removeAttribute('hidden');
     }
 
     protected makeHidden(element: HTMLElement) {
-        element.classList.remove(this.visibleClassName);
-        element.classList.add(this.hiddenClassName);
+        element.setAttribute('hidden', '');
     }
 
     protected runAfter(duration: number, callable: () => any) {

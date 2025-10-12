@@ -41,7 +41,7 @@
     b {
         visibility: hidden;
 
-        &.is-visible {
+        &:not([hidden]) {
             visibility: visible;
         }
     }
@@ -50,7 +50,7 @@
         position: absolute;
         visibility: hidden;
 
-        &.is-visible {
+        &:not([hidden]) {
             position: relative;
             visibility: visible;
         }

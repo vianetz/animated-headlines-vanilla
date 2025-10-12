@@ -11,13 +11,13 @@
         opacity: 0;
         top: .2em;
 
-        &.is-visible {
+        &:not([hidden]) {
             top: 0;
             opacity: 1;
             animation: slide-in .6s;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: slide-out .6s;
         }
     }

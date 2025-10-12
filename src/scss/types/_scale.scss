@@ -8,15 +8,15 @@
         opacity: 0;
         transform: scale(0);
 
-        .is-visible & {
+        :not([hidden]) & {
             opacity: 1;
         }
 
-        &.is-visible {
+        &:not([hidden]) {
             animation: scale-up .6s forwards;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: scale-down .6s forwards;
         }
     }
@@ -27,7 +27,7 @@
             opacity: 0;
         }
 
-        .is-visible i {
+        :not([hidden]) i {
             opacity: 1;
         }
     }

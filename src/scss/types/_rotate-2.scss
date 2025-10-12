@@ -15,15 +15,15 @@
         transform: translateZ(-20px) rotateX(90deg);
         opacity: 0;
 
-        .is-visible & {
+        :not([hidden]) & {
             opacity: 1;
         }
 
-        &.is-visible {
+        &:not([hidden]) {
             animation: ah-rotate-2-in .4s forwards;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: ah-rotate-2-out .4s forwards;
         }
     }
@@ -42,7 +42,7 @@
             }
         }
 
-        .is-visible i {
+        :not([hidden]) i {
             opacity: 1;
         }
     }

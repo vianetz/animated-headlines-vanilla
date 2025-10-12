@@ -31,9 +31,9 @@ Then use the following markup:
 <h1>
     My favorite food is
     <via-animated-headline animation="rotate-1">
-        <b class="is-visible">pizza</b>
-        <b>sushi</b>
-        <b>steak</b>
+        <b>pizza</b>
+        <b hidden>sushi</b>
+        <b hidden>steak</b>
     </span>
 </h1>
 ```

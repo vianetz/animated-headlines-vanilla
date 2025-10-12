@@ -2,12 +2,12 @@
     b {
         opacity: 0;
 
-        &.is-visible {
+        &:not([hidden]) {
             opacity: 1;
             animation: push-in .6s;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: push-out .6s;
         }
     }

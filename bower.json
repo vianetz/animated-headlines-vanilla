@@ -1,6 +1,6 @@
 {
   "name": "animated-headlines",
-  "description": "Simple animated, accessible headlines using a plain JavaScript Web Component",
+  "description": "Simple animated, accessible headlines with a plain JavaScript Web Component",
   "main": "dist/js/animated-headline.js",
   "authors": [
     "Geoff Selby"

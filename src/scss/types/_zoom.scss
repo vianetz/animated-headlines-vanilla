@@ -4,12 +4,12 @@
     b {
         opacity: 0;
 
-        &.is-visible {
+        &:not([hidden]) {
             opacity: 1;
             animation: zoom-in .8s;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: zoom-out .8s;
         }
     }

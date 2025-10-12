@@ -1,17 +1,6 @@
 @use "core";
 @use "types";
 
-via-animated-headline,
-via-animated-words-headline,
-via-animated-letters-headline,
-via-animated-loading-headline,
-via-animated-clip-headline,
-via-animated-type-headline {
-    b:not(.is-visible) {
-        display: none; // make sure initial state looks good
-    }
-}
-
 via-animated-words-headline,
 via-animated-letters-headline,
 via-animated-loading-headline,

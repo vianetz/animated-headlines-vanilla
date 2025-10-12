@@ -28,6 +28,7 @@ export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
 
         this.hideLetter(word.querySelector('.' + this.letterClassName) as HTMLElement, word, isHideWordIfLastLetter);
         this.showLetter(nextWord.querySelector('.' + this.letterClassName) as HTMLElement, nextWord, !isHideWordIfLastLetter);
+        this.switchWord(word, nextWord);
     }
 
     protected hideLetter(letter: HTMLElement, word: HTMLElement, isHideWordIfLastLetter: boolean) {
@@ -49,15 +50,13 @@ export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
     }
 
     private splitIntoSingleLetters(word: Element) {
-        const visibleClassName = this.visibleClassName;
+        const letters = word.textContent!.split('');
 
-        const letters = word.textContent!.split(''),
-            selected = word.classList.contains(visibleClassName);
         for (let i in letters) {
             const element = document.createElement('span');
             element.classList.add(this.letterClassName);
-            if (selected) {
-                element.classList.add(visibleClassName);
+            if (word.hasAttribute('hidden')) {
+                element.setAttribute('hidden', '');
             }
 
             element.innerHTML = letters[i];

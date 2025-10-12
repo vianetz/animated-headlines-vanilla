@@ -34,7 +34,7 @@
         opacity: 0;
         transition: opacity .3s;
 
-        &.is-visible {
+        &:not([hidden]) {
             opacity: 1;
             top: 0;
         }

@@ -10,15 +10,15 @@
         transform: rotateY(180deg);
         backface-visibility: hidden;
 
-        .is-visible & {
+        :not([hidden]) & {
             transform: rotateY(0deg);
         }
 
-        &.is-visible {
+        &:not([hidden]) {
             animation: ah-rotate-3-in .6s forwards;
         }
 
-        &.is-hidden {
+        [hidden] {
             animation: ah-rotate-3-out .6s forwards;
         }
     }
@@ -29,7 +29,7 @@
             opacity: 0;
         }
 
-        .is-visible i {
+        :not([hidden]) i {
             opacity: 1;
         }
     }
