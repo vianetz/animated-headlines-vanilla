@@ -2,19 +2,25 @@
   "name": "@vianetz/animated-headlines-vanilla",
   "version": "0.0.0",
   "description": "Simple animated, accessible headlines with a plain JavaScript Web Component.",
-  "browser": "dist/animated-headline.js",
+  "type": "module",
+  "browser": "dist/animated-headline.umd.cjs",
   "style": "dist/animated-headline.css",
+  "module": "./dist/animated-headline.js",
+  "exports": {
+    ".": {
+      "import": "./dist/animated-headline.js",
+      "require": "./dist/animated-headline.umd.jcs"
+    },
+    "./style.css": "./dist/animated-headline.css"
+  },
   "scripts": {
     "clean": "rm -rf dist/* demo/dist/*",
     "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
+    "development": "vite",
     "prod": "npm run production",
-    "production": "mix --production",
+    "production": "vite build",
     "test": "tsc --noEmit && bundlesize",
-    "build": "npm run clean && npm run prod"
+    "build": "npm run clean && npm run prod && npm run test"
   },
   "author": "Geoff Selby",
   "contributors": [
@@ -30,12 +36,15 @@
     "typewriter"
   ],
   "devDependencies": {
-    "bundlesize2": "^0.0.34",
-    "laravel-mix": "^6.0",
+    "bundlesize2": "^0.0.35",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.5",
     "sass-loader": "^12.6.0",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^7.1.9",
+    "vite-plugin-sass": "^0.1.0",
+    "vite-plugin-static-copy": "^3.1.3",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

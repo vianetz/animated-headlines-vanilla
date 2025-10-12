@@ -1,1 +1,98 @@
-*,:after,:before{box-sizing:border-box}html *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}html{font-size:62.5%}body{background-color:#fff;color:#363636;font-family:Source Sans Pro,sans-serif;font-size:1.6rem}a{text-decoration:none}.animation-type{font-size:2.4rem;font-weight:700}.title{height:160px;line-height:230px;position:relative;text-align:center}.title h1{font-size:2.4rem;font-weight:700}@media only screen and (min-width:768px){.title{line-height:250px}}@media only screen and (min-width:1170px){.title{height:200px;line-height:300px}.title h1{font-size:3rem}}.intro{margin:4em auto;text-align:center}@media only screen and (min-width:768px){.intro{margin:5em auto}}@media only screen and (min-width:1170px){.intro{margin:6em auto}}.ah-headline,.intro h1{font-size:3rem;line-height:1.2}@media only screen and (min-width:768px){.ah-headline,.intro h1{font-size:4.4rem;font-weight:300}}@media only screen and (min-width:1170px){.ah-headline,.intro h1{font-size:6rem}}
+*, :after, :before {
+    box-sizing: border-box
+}
+
+:root {
+    --main-font: Source Sans Pro, sans-serif;
+    --text-color: #363636;
+    --bg-color: #fff;
+}
+
+html {
+    font-size: 62.5%;
+
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--main-font);
+    font-size: 1.6rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.animation-type {
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.title {
+    height: 160px;
+    line-height: 230px;
+    position: relative;
+    text-align: center;
+
+    h1 {
+        font-size: 2.4rem;
+        font-weight: 700
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .title {
+        line-height: 250px
+    }
+}
+
+@media only screen and (min-width: 1170px) {
+    .title {
+        height: 200px;
+        line-height: 300px
+    }
+
+    .title h1 {
+        font-size: 3rem
+    }
+}
+
+.intro {
+    margin: 4em auto;
+    text-align: center
+}
+
+@media only screen and (min-width: 768px) {
+    .intro {
+        margin: 5em auto
+    }
+}
+
+@media only screen and (min-width: 1170px) {
+    .intro {
+        margin: 6em auto
+    }
+}
+
+.ah-headline, .intro h1 {
+    font-size: 3rem;
+    line-height: 1.2
+}
+
+@media only screen and (min-width: 768px) {
+    .ah-headline, .intro h1 {
+        font-size: 4.4rem;
+        font-weight: 300
+    }
+}
+
+@media only screen and (min-width: 1170px) {
+    .ah-headline, .intro h1 {
+        font-size: 6rem
+    }
+}
