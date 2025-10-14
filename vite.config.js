@@ -22,5 +22,8 @@ export default defineConfig({
       // Ensure no external dependencies unless you explicitly want to
       external: [],
     },
+  },
+  esbuild: {
+    legalComments: 'eof'
   }
 });

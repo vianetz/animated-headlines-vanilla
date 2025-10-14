@@ -1,8 +1,3 @@
-/**!
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 function c(a, e, t) {
   let i = performance.now();
   requestAnimationFrame(function s(r) {
@@ -68,11 +63,6 @@ class l extends HTMLElement {
   }
 }
 customElements.define("via-animated-words-headline", l);
-/**!
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 class h extends l {
   lettersDelay = 50;
   letterClassName = "letter";
@@ -104,11 +94,6 @@ class h extends l {
   }
 }
 customElements.define("via-animated-letters-headline", h);
-/**!
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 class u extends l {
   revealDelay = 600;
   connectedCallback() {
@@ -132,11 +117,6 @@ class u extends l {
   }
 }
 customElements.define("via-animated-clip-headline", u);
-/**!
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 class m extends l {
   #e = "is-loading";
   barDelay = 500;
@@ -148,11 +128,6 @@ class m extends l {
   }
 }
 customElements.define("via-animated-loading-headline", m);
-/**!
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 class f extends h {
   #e = "waiting";
   #t = "selected";
@@ -178,13 +153,6 @@ class f extends h {
   }
 }
 customElements.define("via-animated-type-headline", f);
-/**!
- * Plain Vanilla JavaScript Animated Headline Component
- *
- * @author Geoff Selby
- * @author Christoph Massmann <cm@vianetz.com>
- * @license https://opensource.org/licenses/MIT MIT License
- */
 var o = /* @__PURE__ */ ((a) => (a.Clip = "clip", a.LoadingBar = "loading-bar", a.Push = "push", a.Rotate1 = "rotate-1", a.Rotate2 = "rotate-2", a.Rotate3 = "rotate-3", a.Scale = "scale", a.Slide = "slide", a.Type = "type", a.Zoom = "zoom", a))(o || {});
 function b(a, e = {}) {
   let t;
@@ -240,3 +208,10 @@ customElements.define("via-animated-headline", p);
 export {
   o as AnimationType
 };
+/**!
+ * Plain Vanilla JavaScript Animated Headline Component
+ *
+ * @author Geoff Selby
+ * @author Christoph Massmann <cm@vianetz.com>
+ * @license https://opensource.org/licenses/MIT MIT License
+ */
