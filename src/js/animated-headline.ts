@@ -6,7 +6,7 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-import '../scss/animated-headline.scss';
+import '../scss/styles.scss';
 
 import './letters';
 import './words';

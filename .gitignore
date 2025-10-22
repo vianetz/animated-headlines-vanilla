@@ -1,5 +1,2 @@
 node_modules
-mix-manifest.json
 package-lock.json
-demo/dist
-demo/style.css

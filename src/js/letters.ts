@@ -51,22 +51,33 @@ export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
         }
     }
 
-    private splitIntoSingleLetters(word: Element) {
-        const letters = word.textContent!.split('');
+    private splitIntoSingleLetters(word: HTMLElement): void {
+        const letterElements: Element[] = [];
 
-        for (let i in letters) {
-            const element = document.createElement('span');
-            element.classList.add(this.letterClassName);
-            if (word.hasAttribute('hidden')) {
-                element.setAttribute('hidden', '');
+        for (const child of word.childNodes) {
+            if (child.nodeType === Node.TEXT_NODE) { // either the child is a text -> then split into letters
+                const letters = child.textContent!.split('');
+                for (let i in letters) {
+                    const element = document.createElement('span');
+                    element.innerHTML = letters[i];
+                    letterElements.push(element);
+                }
+            } else if (child.nodeType === Node.ELEMENT_NODE) { // otherwise if it is an element -> use as letter
+                letterElements.push((child as Element));
+            } else {
+                console.warn('unsupported child node', child);
             }
-
-            element.innerHTML = letters[i];
-            letters[i] = element.outerHTML;
         }
 
-        word.innerHTML = letters.join('');
-        (word as HTMLElement).style.opacity = "1";
+        letterElements.forEach(letter => {
+            letter.classList.add(this.letterClassName);
+            if (word.hasAttribute('hidden')) {
+                letter.setAttribute('hidden', '');
+            }
+        });
+
+        word.innerHTML = letterElements.map((element) => element.outerHTML).join('');
+        word.style.opacity = "1";
     }
 }
 customElements.define('via-animated-letters-headline', AnimatedSingleLettersElement);

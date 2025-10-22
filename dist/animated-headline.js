@@ -1,13 +1,13 @@
-function c(a, e, t) {
-  let i = performance.now();
-  requestAnimationFrame(function s(r) {
-    let n = (r - i) / t;
+function c(i, e, t) {
+  let s = performance.now();
+  requestAnimationFrame(function a(l) {
+    let n = (l - s) / t;
     n > 1 && (n = 1);
-    let d = a(n);
-    e(d), n < 1 && requestAnimationFrame(s);
+    let d = i(n);
+    e(d), n < 1 && requestAnimationFrame(a);
   });
 }
-class l extends HTMLElement {
+class r extends HTMLElement {
   #e = !1;
   holdDelay = 2500;
   wordSelector = "b";
@@ -55,15 +55,15 @@ class l extends HTMLElement {
     e.setAttribute("hidden", "");
   }
   runAfter(e, t) {
-    c((i) => i, (i) => {
+    c((s) => s, (s) => {
       if (this.#e)
         throw "execution aborted";
-      i === 1 && t();
+      s === 1 && t();
     }, e);
   }
 }
-customElements.define("via-animated-words-headline", l);
-class h extends l {
+customElements.define("via-animated-words-headline", r);
+class h extends r {
   lettersDelay = 50;
   letterClassName = "letter";
   connectedCallback() {
@@ -72,29 +72,35 @@ class h extends l {
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
-    const t = this.getNextWord(e), i = e.querySelectorAll("." + this.letterClassName).length >= t.querySelectorAll("." + this.letterClassName).length;
-    this.hideLetter(e.querySelector("." + this.letterClassName), e, i), this.showLetter(t.querySelector("." + this.letterClassName), t, !i), this.switchWord(e, t);
+    const t = this.getNextWord(e), s = e.querySelectorAll("." + this.letterClassName).length >= t.querySelectorAll("." + this.letterClassName).length;
+    this.hideLetter(e.querySelector("." + this.letterClassName), e, s), this.showLetter(t.querySelector("." + this.letterClassName), t, !s), this.switchWord(e, t);
   }
-  hideLetter(e, t, i) {
-    this.hideOrShowLetter(e, t, i, !0);
+  hideLetter(e, t, s) {
+    this.hideOrShowLetter(e, t, s, !0);
   }
-  showLetter(e, t, i) {
-    this.hideOrShowLetter(e, t, i, !1);
+  showLetter(e, t, s) {
+    this.hideOrShowLetter(e, t, s, !1);
   }
-  hideOrShowLetter(e, t, i = !0, s = !1) {
-    s ? this.makeHidden(e) : this.makeVisible(e), e.nextElementSibling ? this.runAfter(this.lettersDelay, () => this.hideOrShowLetter(e.nextElementSibling, t, i, s)) : i && this.runAfter(this.holdDelay, () => this.next(s ? this.getNextWord(t) : t));
+  hideOrShowLetter(e, t, s = !0, a = !1) {
+    a ? this.makeHidden(e) : this.makeVisible(e), e.nextElementSibling ? this.runAfter(this.lettersDelay, () => this.hideOrShowLetter(e.nextElementSibling, t, s, a)) : s && this.runAfter(this.holdDelay, () => this.next(a ? this.getNextWord(t) : t));
   }
   splitIntoSingleLetters(e) {
-    const t = e.textContent.split("");
-    for (let i in t) {
-      const s = document.createElement("span");
-      s.classList.add(this.letterClassName), e.hasAttribute("hidden") && s.setAttribute("hidden", ""), s.innerHTML = t[i], t[i] = s.outerHTML;
-    }
-    e.innerHTML = t.join(""), e.style.opacity = "1";
+    const t = [];
+    for (const s of e.childNodes)
+      if (s.nodeType === Node.TEXT_NODE) {
+        const a = s.textContent.split("");
+        for (let l in a) {
+          const n = document.createElement("span");
+          n.innerHTML = a[l], t.push(n);
+        }
+      } else s.nodeType === Node.ELEMENT_NODE ? t.push(s) : console.warn("unsupported child node", s);
+    t.forEach((s) => {
+      s.classList.add(this.letterClassName), e.hasAttribute("hidden") && s.setAttribute("hidden", "");
+    }), e.innerHTML = t.map((s) => s.outerHTML).join(""), e.style.opacity = "1";
   }
 }
 customElements.define("via-animated-letters-headline", h);
-class u extends l {
+class u extends r {
   revealDelay = 600;
   connectedCallback() {
     super.connectedCallback(), this.revealDelay = this.hasAttribute("delay") ? parseInt(this.getAttribute("delay")) : this.revealDelay;
@@ -104,20 +110,20 @@ class u extends l {
   }
   showWord(e) {
     let t = e.parentNode.animate([{ width: "2px" }, { width: e.offsetWidth + "px" }], { duration: this.revealDelay });
-    t.onfinish = (i) => this.runAfter(this.holdDelay, () => this.next(e));
+    t.onfinish = (s) => this.runAfter(this.holdDelay, () => this.next(e));
   }
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
     const t = this.getNextWord(e);
-    let i = e.parentNode.animate([{ width: e.offsetWidth + "px" }, { width: "2px" }], { duration: this.revealDelay });
-    i.onfinish = (s) => {
+    let s = e.parentNode.animate([{ width: e.offsetWidth + "px" }, { width: "2px" }], { duration: this.revealDelay });
+    s.onfinish = (a) => {
       this.switchWord(e, t), this.showWord(t);
     };
   }
 }
 customElements.define("via-animated-clip-headline", u);
-class m extends l {
+class m extends r {
   #e = "is-loading";
   barDelay = 500;
   connectedCallback() {
@@ -143,20 +149,20 @@ class f extends h {
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
-    const t = this.getNextWord(e), i = e.parentNode;
-    i.classList.add(this.#t), i.classList.remove(this.#e), this.runAfter(this.selectionDuration, () => {
-      i.classList.remove(this.#t), this.makeHidden(e), e.querySelectorAll("." + this.letterClassName).forEach((s) => this.makeHidden(s));
+    const t = this.getNextWord(e), s = e.parentNode;
+    s.classList.add(this.#t), s.classList.remove(this.#e), this.runAfter(this.selectionDuration, () => {
+      s.classList.remove(this.#t), this.makeHidden(e), e.querySelectorAll("." + this.letterClassName).forEach((a) => this.makeHidden(a));
     }), this.runAfter(this.selectionDuration * 2, () => this.showWord(t));
   }
-  showLetter(e, t, i = !0) {
-    super.showLetter(e, t, i), e.nextElementSibling || this.runAfter(200, () => t.parentNode.classList.add(this.#e));
+  showLetter(e, t, s = !0) {
+    super.showLetter(e, t, s), e.nextElementSibling || this.runAfter(200, () => t.parentNode.classList.add(this.#e));
   }
 }
 customElements.define("via-animated-type-headline", f);
-var o = /* @__PURE__ */ ((a) => (a.Clip = "clip", a.LoadingBar = "loading-bar", a.Push = "push", a.Rotate1 = "rotate-1", a.Rotate2 = "rotate-2", a.Rotate3 = "rotate-3", a.Scale = "scale", a.Slide = "slide", a.Type = "type", a.Zoom = "zoom", a))(o || {});
-function b(a, e = {}) {
+var o = /* @__PURE__ */ ((i) => (i.Clip = "clip", i.LoadingBar = "loading-bar", i.Push = "push", i.Rotate1 = "rotate-1", i.Rotate2 = "rotate-2", i.Rotate3 = "rotate-3", i.Scale = "scale", i.Slide = "slide", i.Type = "type", i.Zoom = "zoom", i))(o || {});
+function b(i, e = {}) {
   let t;
-  switch (a) {
+  switch (i) {
     case "clip":
       t = document.createElement("via-animated-clip-headline");
       break;
@@ -178,10 +184,10 @@ function b(a, e = {}) {
       t = document.createElement("via-animated-type-headline");
       break;
     default:
-      throw "invalid animation type " + a + " (must be one of " + Object.values(o) + ")";
+      throw "invalid animation type " + i + " (must be one of " + Object.values(o) + ")";
   }
-  for (const [i, s] of Object.entries(e))
-    t.setAttribute(i, s ?? "");
+  for (const [s, a] of Object.entries(e))
+    t.setAttribute(s, a ?? "");
   return t;
 }
 class p extends HTMLElement {
@@ -196,12 +202,12 @@ class p extends HTMLElement {
   }
   render() {
     const e = this.getAttribute("animation"), t = {};
-    for (const s of this.attributes)
-      s.name !== "type" && (t[s.name] = s.value);
-    const i = b(e, t);
-    Array.from(this.children).forEach((s) => {
-      s.tagName?.startsWith("VIA-ANIMATED-") ? s.childNodes.forEach((r) => i.appendChild(r.cloneNode(!0))) : i.appendChild(s.cloneNode(!0));
-    }), this.innerHTML = "", this.appendChild(i);
+    for (const a of this.attributes)
+      a.name !== "type" && (t[a.name] = a.value);
+    const s = b(e, t);
+    Array.from(this.children).forEach((a) => {
+      a.tagName?.startsWith("VIA-ANIMATED-") ? a.childNodes.forEach((l) => s.appendChild(l.cloneNode(!0))) : s.appendChild(a.cloneNode(!0));
+    }), this.innerHTML = "", this.appendChild(s);
   }
 }
 customElements.define("via-animated-headline", p);
