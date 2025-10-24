@@ -1,4 +1,4 @@
-# Animated Headlines with Vanilla JavaScript
+# Animated Headlines Web Component
 
 Animated Headlines with interchangeable words that replace one another through CSS transitions.  
 See [demo](https://vianetz.github.io/animated-headlines-vanilla/).

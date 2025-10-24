@@ -1,4 +1,4 @@
-const l = (s, e, t, i = !1) => s.dispatchEvent(new CustomEvent(`via-animated-headlines:${e}`, { bubbles: !0, cancelable: i, detail: t }));
+const l = (s, e, t, i = !1) => s.dispatchEvent(new CustomEvent(`via-animated-headline:${e}`, { bubbles: !0, cancelable: i, detail: t }));
 function u(s, e, t) {
   let i = performance.now();
   requestAnimationFrame(function a(r) {
@@ -13,7 +13,7 @@ class h extends HTMLElement {
   holdDelay = 2500;
   wordSelector = "b";
   connectedCallback() {
-    this.holdDelay = this.hasAttribute("hold") ? parseInt(this.getAttribute("hold")) : this.holdDelay, this.resize(), window.matchMedia("(prefers-reduced-motion: reduce)").matches || this.start(), l(this, "animated-headlines", "ready");
+    this.holdDelay = this.hasAttribute("hold") ? parseInt(this.getAttribute("hold")) : this.holdDelay, this.resize(), window.matchMedia("(prefers-reduced-motion: reduce)").matches || this.start(), l(this, "ready");
   }
   attributeChangedCallback() {
     this.resize();

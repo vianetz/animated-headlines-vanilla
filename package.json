@@ -14,9 +14,9 @@
     "./style.css": "./dist/animated-headline.css"
   },
   "scripts": {
-    "clean": "rm -rf dist/* demo/dist/*",
+    "clean": "rm -rf dist/* demo/dist",
     "dev": "npm run development",
-    "development": "vite build --watch",
+    "development": "ln -sf ../dist/ demo/dist && vite build --watch",
     "prod": "npm run production",
     "production": "vite build",
     "test": "tsc --noEmit && bundlesize",
