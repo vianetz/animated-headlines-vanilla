@@ -1,18 +1,19 @@
-function c(i, e, t) {
-  let s = performance.now();
-  requestAnimationFrame(function a(l) {
-    let n = (l - s) / t;
+const l = (s, e, t, i = !1) => s.dispatchEvent(new CustomEvent(`via-animated-headlines:${e}`, { bubbles: !0, cancelable: i, detail: t }));
+function u(s, e, t) {
+  let i = performance.now();
+  requestAnimationFrame(function a(r) {
+    let n = (r - i) / t;
     n > 1 && (n = 1);
-    let d = i(n);
-    e(d), n < 1 && requestAnimationFrame(a);
+    let c = s(n);
+    e(c), n < 1 && requestAnimationFrame(a);
   });
 }
-class r extends HTMLElement {
+class h extends HTMLElement {
   #e = !1;
   holdDelay = 2500;
   wordSelector = "b";
   connectedCallback() {
-    this.holdDelay = this.hasAttribute("hold") ? parseInt(this.getAttribute("hold")) : this.holdDelay, this.resize(), window.matchMedia("(prefers-reduced-motion: reduce)").matches || this.start();
+    this.holdDelay = this.hasAttribute("hold") ? parseInt(this.getAttribute("hold")) : this.holdDelay, this.resize(), window.matchMedia("(prefers-reduced-motion: reduce)").matches || this.start(), l(this, "animated-headlines", "ready");
   }
   attributeChangedCallback() {
     this.resize();
@@ -21,15 +22,15 @@ class r extends HTMLElement {
     let e = 0;
     this.querySelectorAll(this.wordSelector).forEach(function(t) {
       e = Math.max(t.offsetWidth, e);
-    }), this.style.width = e.toString();
+    }), this.style.width = e.toString(), l(this, "resized", { width: e.toString() });
   }
   /** @api */
   start() {
-    this.#e = !1, this.runAfter(this.holdDelay, () => this.next());
+    this.#e = !1, this.runAfter(this.holdDelay, () => this.next()), l(this, "started");
   }
   /** @api */
   stop() {
-    this.#e = !0;
+    this.#e = !0, l(this, "stopped");
   }
   /** @api */
   current() {
@@ -46,7 +47,7 @@ class r extends HTMLElement {
     return e.nextElementSibling ? e.nextElementSibling : e.parentNode.children[0];
   }
   switchWord(e, t) {
-    this.makeHidden(e), this.makeVisible(t);
+    this.makeHidden(e), this.makeVisible(t), l(this, "word-replaced", { old: e, new: t });
   }
   makeVisible(e) {
     e.removeAttribute("hidden");
@@ -55,15 +56,15 @@ class r extends HTMLElement {
     e.setAttribute("hidden", "");
   }
   runAfter(e, t) {
-    c((s) => s, (s) => {
+    u((i) => i, (i) => {
       if (this.#e)
         throw "execution aborted";
-      s === 1 && t();
+      i === 1 && t();
     }, e);
   }
 }
-customElements.define("via-animated-words-headline", r);
-class h extends r {
+customElements.define("via-animated-words-headline", h);
+class o extends h {
   lettersDelay = 50;
   letterClassName = "letter";
   connectedCallback() {
@@ -72,35 +73,35 @@ class h extends r {
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
-    const t = this.getNextWord(e), s = e.querySelectorAll("." + this.letterClassName).length >= t.querySelectorAll("." + this.letterClassName).length;
-    this.hideLetter(e.querySelector("." + this.letterClassName), e, s), this.showLetter(t.querySelector("." + this.letterClassName), t, !s), this.switchWord(e, t);
+    const t = this.getNextWord(e), i = e.querySelectorAll("." + this.letterClassName).length >= t.querySelectorAll("." + this.letterClassName).length;
+    this.hideLetter(e.querySelector("." + this.letterClassName), e, i), this.showLetter(t.querySelector("." + this.letterClassName), t, !i), this.switchWord(e, t);
   }
-  hideLetter(e, t, s) {
-    this.hideOrShowLetter(e, t, s, !0);
+  hideLetter(e, t, i) {
+    this.hideOrShowLetter(e, t, i, !0);
   }
-  showLetter(e, t, s) {
-    this.hideOrShowLetter(e, t, s, !1);
+  showLetter(e, t, i) {
+    this.hideOrShowLetter(e, t, i, !1);
   }
-  hideOrShowLetter(e, t, s = !0, a = !1) {
-    a ? this.makeHidden(e) : this.makeVisible(e), e.nextElementSibling ? this.runAfter(this.lettersDelay, () => this.hideOrShowLetter(e.nextElementSibling, t, s, a)) : s && this.runAfter(this.holdDelay, () => this.next(a ? this.getNextWord(t) : t));
+  hideOrShowLetter(e, t, i = !0, a = !1) {
+    a ? this.makeHidden(e) : this.makeVisible(e), e.nextElementSibling ? this.runAfter(this.lettersDelay, () => this.hideOrShowLetter(e.nextElementSibling, t, i, a)) : i && this.runAfter(this.holdDelay, () => this.next(a ? this.getNextWord(t) : t));
   }
   splitIntoSingleLetters(e) {
     const t = [];
-    for (const s of e.childNodes)
-      if (s.nodeType === Node.TEXT_NODE) {
-        const a = s.textContent.split("");
-        for (let l in a) {
+    for (const i of e.childNodes)
+      if (i.nodeType === Node.TEXT_NODE) {
+        const a = i.textContent.split("");
+        for (let r in a) {
           const n = document.createElement("span");
-          n.innerHTML = a[l], t.push(n);
+          n.innerHTML = a[r], t.push(n);
         }
-      } else s.nodeType === Node.ELEMENT_NODE ? t.push(s) : console.warn("unsupported child node", s);
-    t.forEach((s) => {
-      s.classList.add(this.letterClassName), e.hasAttribute("hidden") && s.setAttribute("hidden", "");
-    }), e.innerHTML = t.map((s) => s.outerHTML).join(""), e.style.opacity = "1";
+      } else i.nodeType === Node.ELEMENT_NODE ? t.push(i) : console.warn("unsupported child node:", i);
+    t.forEach((i) => {
+      i.classList.add(this.letterClassName), e.hasAttribute("hidden") && i.setAttribute("hidden", "");
+    }), e.innerHTML = t.map((i) => i.outerHTML).join(""), e.style.opacity = "1";
   }
 }
-customElements.define("via-animated-letters-headline", h);
-class u extends r {
+customElements.define("via-animated-letters-headline", o);
+class m extends h {
   revealDelay = 600;
   connectedCallback() {
     super.connectedCallback(), this.revealDelay = this.hasAttribute("delay") ? parseInt(this.getAttribute("delay")) : this.revealDelay;
@@ -110,20 +111,20 @@ class u extends r {
   }
   showWord(e) {
     let t = e.parentNode.animate([{ width: "2px" }, { width: e.offsetWidth + "px" }], { duration: this.revealDelay });
-    t.onfinish = (s) => this.runAfter(this.holdDelay, () => this.next(e));
+    t.onfinish = (i) => this.runAfter(this.holdDelay, () => this.next(e));
   }
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
     const t = this.getNextWord(e);
-    let s = e.parentNode.animate([{ width: e.offsetWidth + "px" }, { width: "2px" }], { duration: this.revealDelay });
-    s.onfinish = (a) => {
+    let i = e.parentNode.animate([{ width: e.offsetWidth + "px" }, { width: "2px" }], { duration: this.revealDelay });
+    i.onfinish = (a) => {
       this.switchWord(e, t), this.showWord(t);
     };
   }
 }
-customElements.define("via-animated-clip-headline", u);
-class m extends r {
+customElements.define("via-animated-clip-headline", m);
+class f extends h {
   #e = "is-loading";
   barDelay = 500;
   connectedCallback() {
@@ -133,8 +134,8 @@ class m extends r {
     super.next(e), e = e ?? this.current(), e !== null && (e.parentNode.classList.remove(this.#e), this.runAfter(this.barDelay, () => e.parentNode.classList.add(this.#e)));
   }
 }
-customElements.define("via-animated-loading-headline", m);
-class f extends h {
+customElements.define("via-animated-loading-headline", f);
+class b extends o {
   #e = "waiting";
   #t = "selected";
   selectionDuration = 500;
@@ -144,25 +145,26 @@ class f extends h {
   resize() {
   }
   showWord(e) {
-    this.showLetter(e.querySelector("." + this.letterClassName), e), this.makeVisible(e);
+    const t = this.current();
+    this.showLetter(e.querySelector("." + this.letterClassName), e), this.makeVisible(e), l(this, "word-replaced", { old: t, new: e });
   }
   next(e = null) {
     if (e = e ?? this.current(), e === null)
       return;
-    const t = this.getNextWord(e), s = e.parentNode;
-    s.classList.add(this.#t), s.classList.remove(this.#e), this.runAfter(this.selectionDuration, () => {
-      s.classList.remove(this.#t), this.makeHidden(e), e.querySelectorAll("." + this.letterClassName).forEach((a) => this.makeHidden(a));
+    const t = this.getNextWord(e), i = e.parentNode;
+    i.classList.add(this.#t), i.classList.remove(this.#e), this.runAfter(this.selectionDuration, () => {
+      i.classList.remove(this.#t), this.makeHidden(e), e.querySelectorAll("." + this.letterClassName).forEach((a) => this.makeHidden(a));
     }), this.runAfter(this.selectionDuration * 2, () => this.showWord(t));
   }
-  showLetter(e, t, s = !0) {
-    super.showLetter(e, t, s), e.nextElementSibling || this.runAfter(200, () => t.parentNode.classList.add(this.#e));
+  showLetter(e, t, i = !0) {
+    super.showLetter(e, t, i), e.nextElementSibling || this.runAfter(200, () => t.parentNode.classList.add(this.#e));
   }
 }
-customElements.define("via-animated-type-headline", f);
-var o = /* @__PURE__ */ ((i) => (i.Clip = "clip", i.LoadingBar = "loading-bar", i.Push = "push", i.Rotate1 = "rotate-1", i.Rotate2 = "rotate-2", i.Rotate3 = "rotate-3", i.Scale = "scale", i.Slide = "slide", i.Type = "type", i.Zoom = "zoom", i))(o || {});
-function b(i, e = {}) {
+customElements.define("via-animated-type-headline", b);
+var d = /* @__PURE__ */ ((s) => (s.Clip = "clip", s.LoadingBar = "loading-bar", s.Push = "push", s.Rotate1 = "rotate-1", s.Rotate2 = "rotate-2", s.Rotate3 = "rotate-3", s.Scale = "scale", s.Slide = "slide", s.Type = "type", s.Zoom = "zoom", s))(d || {});
+function p(s, e = {}) {
   let t;
-  switch (i) {
+  switch (s) {
     case "clip":
       t = document.createElement("via-animated-clip-headline");
       break;
@@ -184,13 +186,13 @@ function b(i, e = {}) {
       t = document.createElement("via-animated-type-headline");
       break;
     default:
-      throw "invalid animation type " + i + " (must be one of " + Object.values(o) + ")";
+      throw "invalid animation type " + s + " (must be one of " + Object.values(d) + ")";
   }
-  for (const [s, a] of Object.entries(e))
-    t.setAttribute(s, a ?? "");
+  for (const [i, a] of Object.entries(e))
+    t.setAttribute(i, a ?? "");
   return t;
 }
-class p extends HTMLElement {
+class y extends HTMLElement {
   static get observedAttributes() {
     return ["animation", "hold", "delay"];
   }
@@ -203,16 +205,16 @@ class p extends HTMLElement {
   render() {
     const e = this.getAttribute("animation"), t = {};
     for (const a of this.attributes)
-      a.name !== "type" && (t[a.name] = a.value);
-    const s = b(e, t);
+      a.name !== "animation" && (t[a.name] = a.value);
+    const i = p(e, t);
     Array.from(this.children).forEach((a) => {
-      a.tagName?.startsWith("VIA-ANIMATED-") ? a.childNodes.forEach((l) => s.appendChild(l.cloneNode(!0))) : s.appendChild(a.cloneNode(!0));
-    }), this.innerHTML = "", this.appendChild(s);
+      a.tagName?.startsWith("VIA-ANIMATED-") ? a.childNodes.forEach((r) => i.appendChild(r.cloneNode(!0))) : i.appendChild(a.cloneNode(!0));
+    }), this.innerHTML = "", this.appendChild(i);
   }
 }
-customElements.define("via-animated-headline", p);
+customElements.define("via-animated-headline", y);
 export {
-  o as AnimationType
+  d as AnimationType
 };
 /**!
  * Plain Vanilla JavaScript Animated Headline Component

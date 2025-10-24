@@ -83,10 +83,10 @@ class AnimatedHeadline extends HTMLElement {
     render() {
         const animationType = this.getAttribute('animation') as AnimationType;
 
-        // collect all attributes except 'type'
+        // collect all attributes except 'animation'
         const forwardedAttrs: { [key: string]: string|null } = {};
         for (const attr of this.attributes) {
-          if (attr.name !== 'type') {
+          if (attr.name !== 'animation') {
             forwardedAttrs[attr.name] = attr.value;
           }
         }

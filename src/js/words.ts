@@ -6,6 +6,8 @@
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
+import {emit} from "./utilities";
+
 /** @see https://javascript.info/js-animation */
 function animate(timing: (timeFraction: number) => any, draw: (timePassed: number) => any, duration: number) {
     let start = performance.now();
@@ -40,6 +42,8 @@ export default class AnimatedWordsElement extends HTMLElement {
         if (! prefersReducedMotion) {
             this.start();
         }
+
+        emit(this, 'ready');
     }
 
     attributeChangedCallback() {
@@ -54,17 +58,21 @@ export default class AnimatedWordsElement extends HTMLElement {
         });
 
         this.style.width = width.toString();
+
+        emit(this, 'resized', {width: width.toString()});
     }
 
     /** @api */
     public start() {
         this.#isStopped = false;
         this.runAfter(this.holdDelay, () => this.next());
+        emit(this, 'started');
     }
 
     /** @api */
     public stop() {
         this.#isStopped = true;
+        emit(this, 'stopped');
     }
 
     /** @api */
@@ -94,6 +102,8 @@ export default class AnimatedWordsElement extends HTMLElement {
     protected switchWord(oldWord: HTMLElement, newWord: HTMLElement) {
         this.makeHidden(oldWord);
         this.makeVisible(newWord);
+
+        emit(this, 'word-replaced', {old: oldWord, new: newWord});
     }
 
     protected makeVisible(element: HTMLElement) {

@@ -65,7 +65,7 @@ export default class AnimatedSingleLettersElement extends AnimatedWordsElement {
             } else if (child.nodeType === Node.ELEMENT_NODE) { // otherwise if it is an element -> use as letter
                 letterElements.push((child as Element));
             } else {
-                console.warn('unsupported child node', child);
+                console.warn('unsupported child node:', child);
             }
         }
 

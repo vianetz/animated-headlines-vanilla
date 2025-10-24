@@ -7,6 +7,7 @@
  */
 
 import AnimatedSingleLettersElement from "./letters";
+import {emit} from "./utilities";
 
 export default class TypeAnimatedWordsElement extends AnimatedSingleLettersElement {
     #waitingClassName = 'waiting';
@@ -24,8 +25,12 @@ export default class TypeAnimatedWordsElement extends AnimatedSingleLettersEleme
     }
 
     protected showWord(word: HTMLElement) {
+        const oldWord = this.current();
+
         this.showLetter(word.querySelector('.' + this.letterClassName) as HTMLElement, word);
         this.makeVisible(word);
+
+        emit(this, 'word-replaced', {old: oldWord, new: word});
     }
 
     protected next(word: HTMLElement|null = null) {

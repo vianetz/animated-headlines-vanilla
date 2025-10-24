@@ -8,7 +8,7 @@ export default defineConfig({
     ],
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/js/animated-headline.ts'),
+            entry: resolve(__dirname, 'src/js/index.ts'),
             name: 'AnimatedHeadline',
             fileName: 'animated-headline', // the proper extensions will be added
         },

@@ -42,7 +42,7 @@ Then use the following markup:
 
 ## Options
 
-The Animated Headlines component provides multiple options to customize different animation settings depending on the type, e.g.:
+The Animated Headlines component provides multiple attributes to customize different animation settings depending on the type, e.g.:
 
 | Option      | Description                                                                                                                       |
 |-------------|-----------------------------------------------------------------------------------------------------------------------------------|
