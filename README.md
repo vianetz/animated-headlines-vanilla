@@ -2,7 +2,7 @@
 
 Animated Headlines with interchangeable words that replace one another through CSS transitions.  
 
-![Demo](demo.gif)
+![Demo](demo.gif)  
 See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
 
 
