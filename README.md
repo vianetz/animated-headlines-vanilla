@@ -1,7 +1,10 @@
 # Animated Headlines Web Component
 
 Animated Headlines with interchangeable words that replace one another through CSS transitions.  
+
+![Demo](demo.gif)
 See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
+
 
 ## Installation
 
@@ -9,11 +12,6 @@ See [demo](https://vianetz.github.io/animated-headlines-vanilla/).
 
 ```bash
 npm install @vianetz/animated-headlines-vanilla
-```
-
-### bower
-```bash
-bower install @vianetz/animated-headlines-vanilla
 ```
 
 ## Default Usage
@@ -56,6 +54,15 @@ The options are set as html attributes on the custom component like this:
 ```
 
 See also [demo source](demo/index.html) for a full list of options for all types.
+
+## Events
+
+This web component emits the following events that you can listen to (should be rather self-explanatory):
+- `via-animated-headline:ready`
+- `via-animated-headline:resized`
+- `via-animated-headline:started`
+- `via-animated-headline:stopped`
+- `via-animated-headline:word-replaced`
 
 ## License
 
