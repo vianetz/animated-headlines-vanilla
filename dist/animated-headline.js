@@ -1,14 +1,14 @@
 const l = (s, e, t, i = !1) => s.dispatchEvent(new CustomEvent(`via-animated-headline:${e}`, { bubbles: !0, cancelable: i, detail: t }));
 function u(s, e, t) {
   let i = performance.now();
-  requestAnimationFrame(function a(r) {
-    let n = (r - i) / t;
+  requestAnimationFrame(function a(h) {
+    let n = (h - i) / t;
     n > 1 && (n = 1);
     let c = s(n);
     e(c), n < 1 && requestAnimationFrame(a);
   });
 }
-class h extends HTMLElement {
+class r extends HTMLElement {
   #e = !1;
   holdDelay = 2500;
   wordSelector = "b";
@@ -63,8 +63,8 @@ class h extends HTMLElement {
     }, e);
   }
 }
-customElements.define("via-animated-words-headline", h);
-class o extends h {
+customElements.define("via-animated-words-headline", r);
+class d extends r {
   lettersDelay = 50;
   letterClassName = "letter";
   connectedCallback() {
@@ -90,9 +90,9 @@ class o extends h {
     for (const i of e.childNodes)
       if (i.nodeType === Node.TEXT_NODE) {
         const a = i.textContent.split("");
-        for (let r in a) {
+        for (let h in a) {
           const n = document.createElement("span");
-          n.innerHTML = a[r], t.push(n);
+          n.innerHTML = a[h], t.push(n);
         }
       } else i.nodeType === Node.ELEMENT_NODE ? t.push(i) : console.warn("unsupported child node:", i);
     t.forEach((i) => {
@@ -100,8 +100,8 @@ class o extends h {
     }), e.innerHTML = t.map((i) => i.outerHTML).join(""), e.style.opacity = "1";
   }
 }
-customElements.define("via-animated-letters-headline", o);
-class m extends h {
+customElements.define("via-animated-letters-headline", d);
+class m extends r {
   revealDelay = 600;
   connectedCallback() {
     super.connectedCallback(), this.revealDelay = this.hasAttribute("delay") ? parseInt(this.getAttribute("delay")) : this.revealDelay;
@@ -124,7 +124,7 @@ class m extends h {
   }
 }
 customElements.define("via-animated-clip-headline", m);
-class f extends h {
+class f extends r {
   #e = "is-loading";
   barDelay = 500;
   connectedCallback() {
@@ -135,7 +135,7 @@ class f extends h {
   }
 }
 customElements.define("via-animated-loading-headline", f);
-class b extends o {
+class p extends d {
   #e = "waiting";
   #t = "selected";
   selectionDuration = 500;
@@ -160,9 +160,9 @@ class b extends o {
     super.showLetter(e, t, i), e.nextElementSibling || this.runAfter(200, () => t.parentNode.classList.add(this.#e));
   }
 }
-customElements.define("via-animated-type-headline", b);
-var d = /* @__PURE__ */ ((s) => (s.Clip = "clip", s.LoadingBar = "loading-bar", s.Push = "push", s.Rotate1 = "rotate-1", s.Rotate2 = "rotate-2", s.Rotate3 = "rotate-3", s.Scale = "scale", s.Slide = "slide", s.Type = "type", s.Zoom = "zoom", s))(d || {});
-function p(s, e = {}) {
+customElements.define("via-animated-type-headline", p);
+var o = /* @__PURE__ */ ((s) => (s.Clip = "clip", s.LoadingBar = "loading-bar", s.Push = "push", s.Rotate1 = "rotate-1", s.Rotate2 = "rotate-2", s.Rotate3 = "rotate-3", s.Scale = "scale", s.Slide = "slide", s.Type = "type", s.Zoom = "zoom", s))(o || {});
+function b(s, e) {
   let t;
   switch (s) {
     case "clip":
@@ -186,11 +186,9 @@ function p(s, e = {}) {
       t = document.createElement("via-animated-type-headline");
       break;
     default:
-      throw "invalid animation type " + s + " (must be one of " + Object.values(d) + ")";
+      throw new Error("invalid animation type " + s + " (must be one of " + Object.values(o) + ")");
   }
-  for (const [i, a] of Object.entries(e))
-    t.setAttribute(i, a ?? "");
-  return t;
+  return Array.from(e).forEach((i) => t.setAttribute(i.name, i.value)), t;
 }
 class y extends HTMLElement {
   static get observedAttributes() {
@@ -203,18 +201,15 @@ class y extends HTMLElement {
     this.render();
   }
   render() {
-    const e = this.getAttribute("animation"), t = {};
-    for (const a of this.attributes)
-      a.name !== "animation" && (t[a.name] = a.value);
-    const i = p(e, t);
-    Array.from(this.children).forEach((a) => {
-      a.tagName?.startsWith("VIA-ANIMATED-") ? a.childNodes.forEach((r) => i.appendChild(r.cloneNode(!0))) : i.appendChild(a.cloneNode(!0));
-    }), this.innerHTML = "", this.appendChild(i);
+    const e = this.getAttribute("animation"), t = b(e, this.attributes);
+    Array.from(this.children).forEach((i) => {
+      i.tagName?.startsWith("VIA-ANIMATED-") ? i.childNodes.forEach((a) => t.appendChild(a.cloneNode(!0))) : t.appendChild(i.cloneNode(!0));
+    }), this.innerHTML = "", this.appendChild(t);
   }
 }
 customElements.define("via-animated-headline", y);
 export {
-  d as AnimationType
+  o as AnimationType
 };
 /**!
  * Plain Vanilla JavaScript Animated Headline Component

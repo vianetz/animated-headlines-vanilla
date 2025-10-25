@@ -27,7 +27,7 @@ export enum AnimationType {
     Zoom = 'zoom'
 }
 
-function createAnimatedHeadline(animationType: AnimationType, props: { [key: string]: string|null } = {}) {
+function createAnimatedHeadline(animationType: AnimationType, attributes: NamedNodeMap) {
     let element;
 
     switch (animationType) {
@@ -52,13 +52,11 @@ function createAnimatedHeadline(animationType: AnimationType, props: { [key: str
             element = document.createElement('via-animated-type-headline');
             break;
         default:
-            throw 'invalid animation type ' + animationType + ' (must be one of ' + Object.values(AnimationType) + ')';
+            throw new Error('invalid animation type ' + animationType + ' (must be one of ' + Object.values(AnimationType) + ')');
     }
 
     // copy attributes to child
-    for (const [key, value] of Object.entries(props)) {
-        element.setAttribute(key, value ?? '');
-    }
+    Array.from(attributes).forEach(attr => element.setAttribute(attr.name, attr.value));
 
     return element;
 }
@@ -82,16 +80,8 @@ class AnimatedHeadline extends HTMLElement {
 
     render() {
         const animationType = this.getAttribute('animation') as AnimationType;
+        const wrapper = createAnimatedHeadline(animationType, this.attributes);
 
-        // collect all attributes except 'animation'
-        const forwardedAttrs: { [key: string]: string|null } = {};
-        for (const attr of this.attributes) {
-          if (attr.name !== 'animation') {
-            forwardedAttrs[attr.name] = attr.value;
-          }
-        }
-
-        const wrapper = createAnimatedHeadline(animationType, forwardedAttrs);
         // re-add the inner contents of the element
         Array.from(this.children).forEach(child => {
             if (child.tagName?.startsWith('VIA-ANIMATED-')) {
@@ -101,9 +91,7 @@ class AnimatedHeadline extends HTMLElement {
             }
         });
 
-        // @ts-ignore
         this.innerHTML = '';
-        // @ts-ignore
         this.appendChild(wrapper);
     }
 }
